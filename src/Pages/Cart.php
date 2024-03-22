@@ -38,6 +38,18 @@ class Cart extends Page {
 	public function __construct( $settings ) {
 		parent::__construct( $settings, $this->properties );
 
+		// TODO: Update the cart amount when shipping changes.
+		add_action(
+			'wc_ajax_kosm_get_cart_total',
+			function() {
+				if ( ! isset( WC()->cart ) ) {
+					wp_send_json_error( 'no_cart' );
+				}
+
+				wp_send_json_success( WC()->cart->total );
+			}
+		);
+
 		add_action(
 			'wp_head',
 			function () {
