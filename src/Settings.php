@@ -23,17 +23,23 @@ class Settings {
 	 * @param array $settings Any existing KOSM settings.
 	 */
 	public function __construct( $settings = array() ) {
-		$this->settings = wp_parse_args( $settings, $this->default() );
+		$default = $this->default();
+		foreach ( wp_parse_args( $settings, $default ) as $setting => $value ) {
+			if ( array_key_exists( $setting, $default ) ) {
+				$this->settings[ $setting ] = $value;
+			}
+		}
 	}
 
 	/**
 	 * Retrieve the value of a setting.
 	 *
 	 * @param string $key The setting name.
+	 * @param mixed  $default The default value if $key does not exist. Default is null.
 	 * @return string|int|null The setting's string or integer value. NULL if $key does not exist.
 	 */
-	public function get( $key ) {
-		return array_key_exists( $key, $this->settings ) ? $this->settings[ $key ] : null;
+	public function get( $key, $default = null ) {
+		return array_key_exists( $key, $this->settings ) ? $this->settings[ $key ] : $default;
 	}
 
 	/**
@@ -48,6 +54,12 @@ class Settings {
 		$settings['onsite_messaging']                       = array(
 			'title' => 'Klarna On-Site Messaging',
 			'type'  => 'title',
+		);
+		$settings['onsite_messaging_test_mode']             = array(
+			'title'   => __( 'Test mode', 'klarna-onsite-messaging-for-woocommerce' ),
+			'type'    => 'checkbox',
+			'label'   => __( 'Enable Test Mode', 'klarna-onsite-messaging-for-woocommerce' ),
+			'default' => $default['onsite_messaging_test_mode'],
 		);
 		$settings['data_client_id']                         = array(
 			'title'       => __( 'Data client ID', 'klarna-onsite-messaging-for-woocommerce' ),
@@ -164,10 +176,12 @@ class Settings {
 	 */
 	private function default() {
 		return array(
+			'onsite_messaging_test_mode'             => 'yes',
 			'data_client_id'                         => '',
 			'onsite_messaging_enabled_product'       => 'yes',
 			'placement_data_key_product'             => '',
 			'onsite_messaging_product_location'      => '45',
+			'onsite_messaging_theme_product'         => 'default',
 			'onsite_messaging_enabled_cart'          => 'yes',
 			'placement_data_key_cart'                => '',
 			'onsite_messaging_cart_location'         => 'woocommerce_cart_collaterals',
