@@ -51,6 +51,13 @@ class KlarnaOnsiteMessaging {
 				2
 			);
 		}
+
+		add_action(
+			'widgets_init',
+			function () {
+				register_widget( new Widget() );
+			}
+		);
 	}
 
 	/**
@@ -81,13 +88,8 @@ class KlarnaOnsiteMessaging {
 		$script_path = plugin_dir_url( __FILE__ ) . 'assets/js/klarna-onsite-messaging.js';
 		wp_register_script( 'klarna_onsite_messaging', $script_path, array( 'jquery' ), KOSM_VERSION );
 
-		$localize = array(
-			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-			'get_cart_total_url' => \WC_AJAX::get_endpoint( 'kosm_get_cart_total' ),
-		);
-
 		global $post;
-		if ( isset( $_GET['osmDebug'] ) && '1' === $_GET['osmDebug'] ) {
+		if ( isset( $_GET['osmDebug'] ) ) {
 			$localize['debug_info'] = array(
 				'product'       => is_product(),
 				'cart'          => is_cart(),
@@ -99,6 +101,11 @@ class KlarnaOnsiteMessaging {
 				'base_location' => $base_location['country'],
 			);
 		}
+
+		$localize = array(
+			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+			'get_cart_total_url' => \WC_AJAX::get_endpoint( 'kosm_get_cart_total' ),
+		);
 
 		wp_localize_script(
 			'klarna_onsite_messaging',

@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KOSM_VERSION', '0.0.1' );
-
 /**
  * The orchestrator class.
  */
@@ -14,7 +12,7 @@ class Utility {
 	/**
 	 * Prints <klarna-placement> HTML element.
 	 *
-	 * @param array $args The arguments.
+	 * @param array $data The data arguments.
 	 * @return void
 	 */
 	public static function print_placement( $data ) {
@@ -24,14 +22,12 @@ class Utility {
 				'key'             => '',
 				'theme'           => '',
 				'purchase_amount' => '',
-				'client_id'       => '',
 			)
 		);
 
 		$key             = $data['key'];
 		$theme           = $data['theme'];
 		$purchase_amount = $data['purchase_amount'];
-		$client_id       = $data['client_id'];
 
 		$locale = self::get_locale_from_currency();
 		if ( empty( $locale ) ) {
@@ -44,7 +40,7 @@ class Utility {
 				return;
 			}
 
-			if ( ! empty( $product ) && empty( $purchase_amount ) ) {
+			if ( is_a( $product, 'WC_Product' ) && empty( $purchase_amount ) ) {
 				if ( $product->is_type( 'variable' ) ) {
 					$purchase_amount = $product->get_variation_price( 'min' );
 				} elseif ( $product->is_type( 'bundle' ) ) {
@@ -65,13 +61,17 @@ class Utility {
 			}
 		}
 
+		if ( ! empty( $theme ) ) {
+			$theme = "data-theme={$theme}";
+		}
+
 		?>
 	<klarna-placement
 		data-key="<?php echo esc_html( $key ); ?>"
 		data-locale="<?php echo esc_html( $locale ); ?>"
 		data-preloaded="true"
-		<?php esc_html_e( "data-theme={$theme}" ); ?>
-		<?php esc_html_e( "data-purchase-amount={$purchase_amount}" ); ?>
+		<?php echo esc_html( $theme ); ?>
+		<?php echo esc_html( "data-purchase-amount={$purchase_amount}" ); ?>
 	></klarna-placement>
 		<?php
 	}
@@ -79,7 +79,7 @@ class Utility {
 	/**
 	 * Get the product from the global product variable set by WooCommerce.
 	 *
-	 * @return bool|\WC_Product|null The product if it can be retrieved. Otherwise, FALSE or null.
+	 * @return \WC_Product|null|false The product if it can be retrieved. Otherwise, FALSE or null.
 	 */
 	public static function get_product() {
 		global $product;
