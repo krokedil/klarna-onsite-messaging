@@ -2,6 +2,7 @@
 
 namespace Krokedil\KlarnaOnsiteMessaging\Pages;
 
+use Krokedil\KlarnaOnsiteMessaging\Utility;
 use Krokedil\KlarnaOnsiteMessaging\Settings;
 
 /**
@@ -101,6 +102,27 @@ abstract class Page {
 			} else {
 				$this->{$key} = $settings->get( $value );
 			}
+
+			if ( in_array( $this->{$key}, array( 'yes', 'no' ) ) ) {
+				$this->{$key} = wc_string_to_bool( $this->{$key} );
+			}
+		}
+	}
+
+	/**
+	 * Print the HTML placement.
+	 *
+	 * @return void
+	 */
+	public function display_placement() {
+		if ( ! empty( $this->client_id ) ) {
+			$args = array(
+				'key'             => $this->key,
+				'theme'           => $this->theme,
+				'purchase-amount' => '',
+				'client_id'       => $this->client_id,
+			);
+			Utility::print_placement( $args );
 		}
 	}
 }

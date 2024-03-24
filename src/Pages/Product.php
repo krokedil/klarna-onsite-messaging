@@ -1,19 +1,32 @@
 <?php
 namespace Krokedil\KlarnaOnsiteMessaging\Pages;
 
-use Krokedil\KlarnaOnsiteMessaging\Utility;
 use Krokedil\KlarnaOnsiteMessaging\Settings;
 
 /**
- * TODO: Update class doc.
+ * Class for handling and displaying the placement on the Product page.
  */
 class Product extends Page {
+
 	/**
-	 * The hook name for location of the placement.
+	 * Whether the custom widget is enabled.
+	 *
+	 * @var bool
+	 */
+	protected $custom_widget_enabled = false;
+	/**
+	 * The hook name for location of the custom placement.
 	 *
 	 * @var string
 	 */
-	protected $target = 'woocommerce_single_product_summary';
+	protected $custom_widget_target = 'woocommerce_single_product_summary';
+
+	/**
+	 * The priority of the custom placement.
+	 *
+	 * @var int
+	 */
+	protected $custom_widget_priority = 35;
 
 	/**
 	 * The setting keys for the Product.
@@ -21,12 +34,15 @@ class Product extends Page {
 	 * @var array
 	 */
 	protected $properties = array(
-		'enabled'      => 'onsite_messaging_enabled_product',
-		'theme'        => 'onsite_messaging_theme_product',
-		'key'          => 'placement_data_key_product',
-		'client_id'    => 'data_client_id',
-		'placement_id' => 'placement_data_key_product',
-		'priority'     => 'onsite_messaging_product_location',
+		'enabled'                => 'onsite_messaging_enabled_product',
+		'theme'                  => 'onsite_messaging_theme_product',
+		'key'                    => 'placement_data_key_product',
+		'client_id'              => 'data_client_id',
+		'placement_id'           => 'placement_data_key_product',
+		'priority'               => 'onsite_messaging_product_location',
+		'custom_widget_enabled'  => 'custom_product_page_widget_enabled',
+		'custom_widget_target'   => 'custom_product_page_placement_hook',
+		'custom_widget_priority' => 'custom_product_page_placement_priority',
 	);
 
 	/**
@@ -37,40 +53,22 @@ class Product extends Page {
 	public function __construct( $settings ) {
 		parent::__construct( $settings, $this->properties );
 
+		// The hook name for location of the placement.
+		$this->target = 'woocommerce_single_product_summary';
+
 		add_action(
 			'wp_head',
 			function () {
 				if ( $this->enabled && is_product() ) {
 					$target   = apply_filters( 'klarna_onsite_messaging_product_target', $this->target );
 					$priority = apply_filters( 'klarna_onsite_messaging_product_priority', $this->priority );
-					add_action( $target, array( $this, 'add_iframe' ), $priority );
+					add_action( $target, array( $this, 'parent::display_placement' ), $priority );
+				}
+
+				if ( $this->custom_widget_enabled ) {
+					add_action( $this->custom_widget_target, array( $this, 'parent::display_placement' ), $this->custom_widget_priority );
 				}
 			}
 		);
-	}
-
-		/**
-		 * Adds the iframe to the page.
-		 *
-		 * @return void
-		 */
-	public function add_iframe() {
-		if ( ! empty( $this->client_id ) ) {
-			$args = array(
-				'key'             => $this->key,
-				'purchase-amount' => '',
-				'theme'           => $this->theme,
-				'client_id'       => $this->client_id,
-			);
-			Utility::print_placement( $args );
-		} /*
-		else {
-			?>
-			<klarna-placement class="klarna-onsite-messaging-product" <?php echo ( ! empty( $this->theme ) ) ? esc_html( "data-theme=$this->theme" ) : ''; ?>
-				data-id="<?php echo esc_html( $this->placement_id ); ?>"
-				data-total_amount="<?php echo esc_html( $price ); ?>"
-				></klarna-placement>
-			<?php
-		} */
 	}
 }

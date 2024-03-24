@@ -20,7 +20,7 @@ class Utility {
 			$data,
 			array(
 				'key'             => '',
-				'theme'           => '',
+				'theme'           => 'default',
 				'purchase_amount' => '',
 			)
 		);
@@ -34,6 +34,7 @@ class Utility {
 			return;
 		}
 
+		$class = 'klarna-onsite-messaging';
 		if ( ! is_cart() ) {
 			$product = self::get_product();
 			if ( empty( $product ) ) {
@@ -58,20 +59,20 @@ class Utility {
 
 				// Force a numeric value.
 				$purchase_amount = intval( number_format( $purchase_amount * 100, 0, '', '' ) );
+				$class           = 'klarna-onsite-messaging-product';
 			}
-		}
-
-		if ( ! empty( $theme ) ) {
-			$theme = "data-theme={$theme}";
+		} else {
+			// Cart.
+			$purchase_amount = empty( $purchase_amount ) ? WC()->cart->get_total( 'kosm' ) * 100 : $purchase_amount;
 		}
 
 		?>
-	<klarna-placement
-		data-key="<?php echo esc_html( $key ); ?>"
-		data-locale="<?php echo esc_html( $locale ); ?>"
+	<klarna-placement class=<?php echo esc_attr( $class ); ?>
 		data-preloaded="true"
-		<?php echo esc_html( $theme ); ?>
-		<?php echo esc_html( "data-purchase-amount={$purchase_amount}" ); ?>
+		data-key="<?php echo esc_attr( $key ); ?>"
+		data-locale="<?php echo esc_attr( $locale ); ?>"
+		data-theme="<?php echo esc_html( $theme ); ?>"
+		data-purchase-amount="<?php echo esc_attr( $purchase_amount ); ?>"
 	></klarna-placement>
 		<?php
 	}
