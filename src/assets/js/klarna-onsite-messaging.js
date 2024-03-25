@@ -1,7 +1,7 @@
 jQuery( function ( $ ) {
     var klarna_onsite_messaging = {
-        update_iframe: function () {
-            if ( window.Klarna ) {
+        refresh: function () {
+            if ( window.Klarna && window.Klarna.OnsiteMessaging ) {
                 window.Klarna.OnsiteMessaging.refresh()
             }
             $( "klarna-placement" ).show()
@@ -41,7 +41,7 @@ jQuery( function ( $ ) {
                 $( this ).attr( "data-purchase-amount", price )
             } )
 
-            klarna_onsite_messaging.update_iframe()
+            klarna_onsite_messaging.refresh()
         },
 
         debug_info: function () {
@@ -73,7 +73,7 @@ jQuery( function ( $ ) {
                 }
 
                 klarna_onsite_messaging.debug_info()
-                klarna_onsite_messaging.update_iframe()
+                klarna_onsite_messaging.refresh()
             } )
 
             $( document.body ).on( "updated_cart_totals", function () {
