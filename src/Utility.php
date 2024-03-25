@@ -104,17 +104,10 @@ class Utility {
 	 */
 	public static function get_product() {
 		global $product;
+		global $post;
 
-		if ( empty( $product ) ) {
-			return false;
-		}
-
-		$product = wc_get_product( $product );
-		if ( empty( $product ) ) {
-			return false;
-		}
-
-		return $product;
+		$product = is_a( $product, 'WC_Product' ) ? $product : wc_get_product( $post->ID );
+		return is_a( $product, 'WC_Product' ) ? $product : false;
 	}
 
 	/**

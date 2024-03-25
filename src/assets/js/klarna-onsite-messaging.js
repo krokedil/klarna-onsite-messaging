@@ -45,13 +45,13 @@ jQuery( function ( $ ) {
         },
 
         debug_info: function () {
-            if ( /[?&]osmDebug=1/.test( location.search ) ) {
+            if ( /[?&]osmDebug/.test( location.search ) ) {
                 const d = klarna_onsite_messaging_params.debug_info
 
                 if ( typeof d !== "undefined" ) {
                     console.log( "%cDebug info: ", "color: #ff0000" )
                     for ( [ key, value ] of Object.entries( d ) ) {
-                        console.log( key, value )
+                        console.log( `${ key }: ${ value }` )
                     }
 
                     if (

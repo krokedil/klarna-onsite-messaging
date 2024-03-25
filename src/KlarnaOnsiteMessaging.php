@@ -101,6 +101,11 @@ class KlarnaOnsiteMessaging {
 		$script_path = plugin_dir_url( __FILE__ ) . 'assets/js/klarna-onsite-messaging.js';
 		wp_register_script( 'klarna_onsite_messaging', $script_path, array( 'jquery' ), KOSM_VERSION );
 
+		$localize = array(
+			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+			'get_cart_total_url' => \WC_AJAX::get_endpoint( 'kosm_get_cart_total' ),
+		);
+
 		if ( isset( $_GET['osmDebug'] ) ) {
 			$localize['debug_info'] = array(
 				'product'       => is_product(),
@@ -112,12 +117,20 @@ class KlarnaOnsiteMessaging {
 				'library'       => ( wp_scripts() )->registered['klarna_onsite_messaging_sdk']->src ?? $region,
 				'base_location' => $base_location['country'],
 			);
-		}
 
-		$localize = array(
-			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-			'get_cart_total_url' => \WC_AJAX::get_endpoint( 'kosm_get_cart_total' ),
-		);
+			$product = Utility::get_product();
+			if ( ! empty( $product ) ) {
+				$type                                   = $product->get_type();
+				$localize['debug_info']['product_type'] = $type;
+				if ( method_exists( $product, 'get_available_variations' ) ) {
+					foreach ( $product->get_available_variations() as $variation ) {
+						$attribute                                   = wc_get_var( $variation['attributes'] );
+						$localize['debug_info']['default_variation'] = reset( $attribute );
+						break;
+					}
+				}
+			}
+		}
 
 		wp_localize_script(
 			'klarna_onsite_messaging',
