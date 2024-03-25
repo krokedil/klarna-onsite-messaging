@@ -32,38 +32,45 @@ class KlarnaOnsiteMessaging {
 		$cart           = new Cart( $this->settings );
 		$shortcode      = new Shortcode();
 
+		add_action( 'widgets_init', array( $this, 'init_widget' ) );
+
 		if ( class_exists( 'WooCommerce' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			add_filter(
-				'script_loader_tag',
-				function ( $tag, $handle ) {
-					if ( 'klarna_onsite_messaging_sdk' !== $handle ) {
-						return $tag;
-					}
-
-					$environment    = 'yes' === $this->settings->get( 'onsite_messaging_test_mode' ) ? 'playground' : 'production';
-					$data_client_id = apply_filters( 'kosm_data_client_id', $this->settings->get( 'data_client_id' ) );
-					$tag            = str_replace( ' src', ' async src', $tag );
-					$tag            = str_replace( '></script>', " data-environment={$environment} data-client-id='{$data_client_id}'></script>", $tag );
-
-					return $tag;
-				},
-				10,
-				2
-			);
+			add_filter( 'script_loader_tag', array( $this, 'add_data_attributes' ), 10, 2 );
 		}
-
-		// TODO: Move to function.
-		add_action(
-			'widgets_init',
-			function () {
-				register_widget( new Widget() );
-			}
-		);
 	}
 
 	/**
-	 * TODO: Add docs.
+	 * Register the widget.
+	 *
+	 * @return void
+	 */
+	public function init_widget() {
+		register_widget( new Widget() );
+	}
+
+	/**
+	 * Add data- attributes to <script> tag.
+	 *
+	 * @param string $tag The <script> tag for the enqueued script.
+	 * @param string $handle The script’s registered handle.
+	 * @return string
+	 */
+	public function add_data_attributes( $tag, $handle ) {
+		if ( 'klarna_onsite_messaging_sdk' !== $handle ) {
+			return $tag;
+		}
+
+		$environment    = 'yes' === $this->settings->get( 'onsite_messaging_test_mode' ) ? 'playground' : 'production';
+		$data_client_id = apply_filters( 'kosm_data_client_id', $this->settings->get( 'data_client_id' ) );
+		$tag            = str_replace( ' src', ' async src', $tag );
+		$tag            = str_replace( '></script>', " data-environment={$environment} data-client-id='{$data_client_id}'></script>", $tag );
+
+		return $tag;
+	}
+
+	/**
+	 * Enqueue KOSM and library scripts.
 	 *
 	 * @return void
 	 */

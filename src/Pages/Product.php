@@ -56,19 +56,23 @@ class Product extends Page {
 		// The hook name for location of the placement.
 		$this->target = 'woocommerce_single_product_summary';
 
-		add_action(
-			'wp_head',
-			function () {
-				if ( $this->enabled && is_product() ) {
-					$target   = apply_filters( 'klarna_onsite_messaging_product_target', $this->target );
-					$priority = apply_filters( 'klarna_onsite_messaging_product_priority', $this->priority );
-					add_action( $target, array( $this, 'parent::display_placement' ), $priority );
-				}
+		add_action( 'wp_head', array( $this, 'register_placement' ) );
+	}
 
-				if ( $this->custom_widget_enabled ) {
-					add_action( $this->custom_widget_target, array( $this, 'parent::display_placement' ), $this->custom_widget_priority );
-				}
-			}
-		);
+	/**
+	 * Register hook for displaying the placement.
+	 *
+	 * @return void
+	 */
+	public function register_placement() {
+		if ( $this->enabled && is_product() ) {
+			$target   = apply_filters( 'klarna_onsite_messaging_product_target', $this->target );
+			$priority = apply_filters( 'klarna_onsite_messaging_product_priority', $this->priority );
+			add_action( $target, array( $this, 'parent::display_placement' ), $priority );
+		}
+
+		if ( $this->custom_widget_enabled ) {
+			add_action( $this->custom_widget_target, array( $this, 'parent::display_placement' ), $this->custom_widget_priority );
+		}
 	}
 }
