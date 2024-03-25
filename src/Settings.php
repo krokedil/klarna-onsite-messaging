@@ -62,9 +62,9 @@ class Settings {
 			'default' => $default['onsite_messaging_test_mode'],
 		);
 		$settings['data_client_id']                         = array(
-			'title'       => __( 'Data client ID', 'klarna-onsite-messaging-for-woocommerce' ),
+			'title'       => __( 'Client ID', 'klarna-onsite-messaging-for-woocommerce' ),
 			'type'        => 'text',
-			'description' => __( 'Enter the data-client-id given by Klarna for Klarna On-Site Messaging', 'klarna-onsite-messaging-for-woocommerce' ),
+			'description' => __( 'Enter the client ID given by Klarna for Klarna On-Site Messaging', 'klarna-onsite-messaging-for-woocommerce' ),
 			'default'     => $default['data_client_id'],
 			'desc_tip'    => true,
 		);
