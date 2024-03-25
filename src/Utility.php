@@ -16,6 +16,23 @@ class Utility {
 	 * @return void
 	 */
 	public static function print_placement( $data ) {
+		// Normalize keys.
+		foreach ( $data as $key => $value ) {
+			unset( $data[ $key ] );
+			$key          = str_replace( 'data-', '', $key );
+			$key          = str_replace( '-', '_', $key );
+			$data[ $key ] = $value;
+		}
+
+		// Remove any empty elements so that the defaults can be used instead.
+		$data = array_filter(
+			$data,
+			function ( $property ) {
+				return ! empty( $property );
+			}
+		);
+
+		// The defaults to use.
 		$data = wp_parse_args(
 			$data,
 			array(
@@ -36,12 +53,15 @@ class Utility {
 
 		$class = 'klarna-onsite-messaging';
 		if ( ! is_cart() ) {
-			$product = self::get_product();
-			if ( empty( $product ) ) {
-				return;
-			}
+			if ( empty( $purchase_amount ) ) {
+				$product = self::get_product();
+				// If the purchase amount is not set, try to retrieve it from the product.
+				if ( ! is_a( $product, 'WC_Product' ) ) {
+					// If the product could not be retrieved, there is no way of retrieving the purchase amount.
+					// Thus, we cannot proceed with displaying the placement.
+					return;
+				}
 
-			if ( is_a( $product, 'WC_Product' ) && empty( $purchase_amount ) ) {
 				if ( $product->is_type( 'variable' ) ) {
 					$purchase_amount = $product->get_variation_price( 'min' );
 				} elseif ( $product->is_type( 'bundle' ) ) {
@@ -51,7 +71,7 @@ class Utility {
 				}
 
 				// WOO-DISCOUNT-RULES: Check if the filter for retrieving the discounted price exists. Note: by default, quantity is 1.
-				// See: https://gist.github.com/AshlinRejo/c37a155a42c0e30beafbbad183f0c4e8
+				// See: https://gist.github.com/AshlinRejo/c37a155a42c0e30beafbbad183f0c4e8.
 				if ( has_filter( 'advanced_woo_discount_rules_get_product_discount_price_from_custom_price' ) ) {
 					$maybe_price     = apply_filters( 'advanced_woo_discount_rules_get_product_discount_price_from_custom_price', $purchase_amount, $product, 1, $purchase_amount, 'discounted_price', true );
 					$purchase_amount = false !== $maybe_price ? $maybe_price : $purchase_amount;

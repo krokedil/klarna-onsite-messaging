@@ -30,6 +30,7 @@ class KlarnaOnsiteMessaging {
 		$this->settings = new Settings( $settings );
 		$page           = new Product( $this->settings );
 		$cart           = new Cart( $this->settings );
+		$shortcode      = new Shortcode();
 
 		if ( class_exists( 'WooCommerce' ) ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -52,6 +53,7 @@ class KlarnaOnsiteMessaging {
 			);
 		}
 
+		// TODO: Move to function.
 		add_action(
 			'widgets_init',
 			function () {
@@ -66,7 +68,10 @@ class KlarnaOnsiteMessaging {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		if ( ! ( is_product() || is_cart() || ( ! empty( $post ) && has_shortcode( $post->post_content, 'onsite_messaging' ) ) ) ) {
+		global $post;
+
+		$has_shortcode = ( ! empty( $post ) && has_shortcode( $post->post_content, 'onsite_messaging' ) );
+		if ( ! ( is_product() || is_cart() || ! $has_shortcode ) ) {
 			return;
 		}
 
@@ -82,18 +87,18 @@ class KlarnaOnsiteMessaging {
 		$region = apply_filters( 'kosm_region_library', $region );
 
 		if ( ! empty( $this->settings->get( 'data_client_id' ) ) ) {
-			wp_register_script( 'klarna_onsite_messaging_sdk', 'https://js.klarna.com/web-sdk/v1/klarna.js', array( 'jquery' ), null, true );
+			// phpcs:ignore -- The version is managed by Klarna.
+			wp_register_script( 'klarna_onsite_messaging_sdk', 'https://js.klarna.com/web-sdk/v1/klarna.js', array(), false, true );
 		}
 
 		$script_path = plugin_dir_url( __FILE__ ) . 'assets/js/klarna-onsite-messaging.js';
 		wp_register_script( 'klarna_onsite_messaging', $script_path, array( 'jquery' ), KOSM_VERSION );
 
-		global $post;
 		if ( isset( $_GET['osmDebug'] ) ) {
 			$localize['debug_info'] = array(
 				'product'       => is_product(),
 				'cart'          => is_cart(),
-				'shortcode'     => ( ! empty( $post ) && has_shortcode( $post->post_content, 'onsite_messaging' ) ),
+				'shortcode'     => $has_shortcode,
 				'data_client'   => ! ( empty( $this->settings->get( 'data_client_id' ) ) ),
 				'locale'        => Utility::get_locale_from_currency(),
 				'currency'      => get_woocommerce_currency(),
