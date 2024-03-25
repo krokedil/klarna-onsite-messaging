@@ -28,13 +28,24 @@ class Widget extends \WP_Widget {
 	public function widget( $args, $instance ) {
 		wp_enqueue_script( 'klarna_onsite_messaging_sdk' );
 
-		$default_args = array(
-			'key'             => 'homepage-promotion-wide',
-			'theme'           => '',
-			'purchase-amount' => '',
+		$title = apply_filters( 'widget_title', $instance['title'] );
+
+		// Remove any empty elements so that the defaults can be used instead.
+		$instance = array_filter(
+			$instance,
+			function ( $property ) {
+				return ! empty( $property );
+			}
 		);
-		$title        = apply_filters( 'widget_title', $instance['title'] );
-		$instance     = wp_parse_args( $instance, $default_args );
+
+		$instance = wp_parse_args(
+			$instance,
+			array(
+				'key'             => 'homepage-promotion-wide',
+				'theme'           => '',
+				'purchase-amount' => '',
+			)
+		);
 
 		echo $args['before_widget']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 		if ( ! empty( $title ) ) {
