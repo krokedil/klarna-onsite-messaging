@@ -95,11 +95,11 @@ class KlarnaOnsiteMessaging {
 
 		if ( ! empty( $this->settings->get( 'data_client_id' ) ) ) {
 			// phpcs:ignore -- The version is managed by Klarna.
-			wp_register_script( 'klarna_onsite_messaging_sdk', 'https://js.klarna.com/web-sdk/v1/klarna.js', array(), false, true );
+			wp_register_script( 'klarna_onsite_messaging_sdk', 'https://js.klarna.com/web-sdk/v1/klarna.js', array(), false );
 		}
 
 		$script_path = plugin_dir_url( __FILE__ ) . 'assets/js/klarna-onsite-messaging.js';
-		wp_register_script( 'klarna_onsite_messaging', $script_path, array( 'jquery' ), KOSM_VERSION );
+		wp_register_script( 'klarna_onsite_messaging', $script_path, array( 'jquery', 'klarna_onsite_messaging_sdk' ), KOSM_VERSION, true );
 
 		$localize = array(
 			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
