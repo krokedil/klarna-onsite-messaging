@@ -70,7 +70,8 @@ class Cart extends Page {
 	 *
 	 * @return void
 	 */
-	public function add_cart_total_input() {        ?>
+	public function add_cart_total_input() {
+		?>
 			<input type="hidden" id="kosm_cart_total" name="kosm_cart_total" value="<?php echo esc_html( WC()->cart->get_total( 'kosm' ) ); ?>">
 		<?php
 	}
