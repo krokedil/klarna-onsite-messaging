@@ -19,7 +19,29 @@ class KlarnaOnsiteMessaging {
 	 *
 	 * @var Settings
 	 */
-	public $settings;
+	private $settings;
+
+	/**
+	 * Display placement on product page.
+	 *
+	 * @var Product
+	 */
+	private $product;
+
+	/**
+	 * Display placement on cart page.
+	 *
+	 * @var Cart
+	 */
+	private $cart;
+
+	/**
+	 * Display placement with shortcode.
+	 *
+	 * @var Shortcode
+	 */
+	private $shortcode;
+
 
 	/**
 	 * Class constructor.
@@ -27,10 +49,10 @@ class KlarnaOnsiteMessaging {
 	 * @param array $settings Any existing KOSM settings.
 	 */
 	public function __construct( $settings ) {
-		$this->settings = new Settings( $settings );
-		$page           = new Product( $this->settings );
-		$cart           = new Cart( $this->settings );
-		$shortcode      = new Shortcode();
+		$this->settings  = new Settings( $settings );
+		$this->product   = new Product( $this->settings );
+		$this->cart      = new Cart( $this->settings );
+		$this->shortcode = new Shortcode();
 
 		add_action( 'widgets_init', array( $this, 'init_widget' ) );
 
@@ -139,5 +161,41 @@ class KlarnaOnsiteMessaging {
 		);
 
 		wp_enqueue_script( 'klarna_onsite_messaging' );
+	}
+
+	/**
+	 * Get the settings object.
+	 *
+	 * @return Settings
+	 */
+	public function settings() {
+		return $this->settings;
+	}
+
+	/**
+	 * Get the product object.
+	 *
+	 * @return Product
+	 */
+	public function product() {
+		return $this->product;
+	}
+
+	/**
+	 * Get the cart object.
+	 *
+	 * @return Cart
+	 */
+	public function cart() {
+		return $this->cart;
+	}
+
+	/**
+	 * Get the shortcode object.
+	 *
+	 * @return Shortcode
+	 */
+	public function shortcode() {
+		return $this->shortcode;
 	}
 }
