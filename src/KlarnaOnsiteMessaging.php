@@ -138,10 +138,6 @@ class KlarnaOnsiteMessaging {
 			$localize
 		);
 
-		if ( ! empty( $this->settings->get( 'data_client_id' ) ) ) {
-			wp_enqueue_script( 'klarna_onsite_messaging_sdk' );
-		}
-
 		wp_enqueue_script( 'klarna_onsite_messaging' );
 	}
 }
