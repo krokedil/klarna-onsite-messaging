@@ -60,6 +60,8 @@ class KlarnaOnsiteMessaging {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_filter( 'script_loader_tag', array( $this, 'add_data_attributes' ), 10, 2 );
 		}
+
+		add_action( 'admin_notices', array( $this, 'kosm_installed_admin_notice' ) );
 	}
 
 	/**
@@ -69,6 +71,20 @@ class KlarnaOnsiteMessaging {
 	 */
 	public function init_widget() {
 		register_widget( new Widget() );
+	}
+
+	/**
+	 * Check if the Klarna On-Site Messaging plugin is active, and notify the admin about the new changes.
+	 *
+	 * @return void
+	 */
+	public function kosm_installed_admin_notice() {
+		$plugin = 'klarna-onsite-messaging-for-woocommerce/klarna-onsite-messaging-for-woocommerce.php';
+		if ( is_plugin_active( $plugin ) || array_key_exists( $plugin, get_plugins() ) ) {
+			$message = __( 'The "Klarna On-Site Messaging for WooCommerce" plugin is now integrated into Klarna Payments. Please disable the plugin.', 'klarna-onsite-messaging-for-woocommerce' );
+			printf( '<div class="notice notice-error"><p>%s</p></div>', esc_html( $message ) );
+
+		}
 	}
 
 	/**
