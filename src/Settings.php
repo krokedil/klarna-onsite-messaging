@@ -104,9 +104,8 @@ class Settings {
 			'default' => $default['onsite_messaging_theme_product'],
 			'type'    => 'select',
 			'options' => array(
-				'default' => __( 'Light', 'klarna-onsite-messaging-for-woocommerce' ),
+				'default' => __( 'Default', 'klarna-onsite-messaging-for-woocommerce' ),
 				'dark'    => __( 'Dark', 'klarna-onsite-messaging-for-woocommerce' ),
-				'none'    => __( 'None', 'klarna-onsite-messaging-for-woocommerce' ),
 			),
 		);
 		$settings['onsite_messaging_enabled_cart']          = array(
@@ -143,9 +142,8 @@ class Settings {
 			'default' => $default['onsite_messaging_theme_cart'],
 			'type'    => 'select',
 			'options' => array(
-				'default' => __( 'Light', 'klarna-onsite-messaging-for-woocommerce' ),
+				'default' => __( 'Default', 'klarna-onsite-messaging-for-woocommerce' ),
 				'dark'    => __( 'Dark', 'klarna-onsite-messaging-for-woocommerce' ),
-				'none'    => __( 'None', 'klarna-onsite-messaging-for-woocommerce' ),
 			),
 		);
 		$settings['custom_product_page_widget_enabled']     = array(
