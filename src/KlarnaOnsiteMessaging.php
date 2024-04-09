@@ -64,15 +64,19 @@ class KlarnaOnsiteMessaging {
 		add_action( 'admin_notices', array( $this, 'kosm_installed_admin_notice' ) );
 
 		// Unhook the KOSM plugin's action hooks.
-		$hooks    = wc_get_var( $GLOBALS['wp_filter']['wp_head'] );
-		$priority = 10;
-		foreach ( $hooks->callbacks[ $priority ] as $callback ) {
-			$function = $callback['function'];
-			if ( is_array( $function ) ) {
-				$class  = reset( $function );
-				$method = end( $function );
-				if ( strpos( get_class( $class ), 'Klarna_OnSite_Messaging' ) !== false ) {
-					remove_action( 'wp_head', array( $class, $method ) );
+		$plugin = 'klarna-onsite-messaging-for-woocommerce/klarna-onsite-messaging-for-woocommerce.php';
+		if ( is_plugin_active( $plugin ) ) {
+
+			$hooks    = wc_get_var( $GLOBALS['wp_filter']['wp_head'] );
+			$priority = 10;
+			foreach ( $hooks->callbacks[ $priority ] as $callback ) {
+				$function = $callback['function'];
+				if ( is_array( $function ) ) {
+					$class  = reset( $function );
+					$method = end( $function );
+					if ( strpos( get_class( $class ), 'Klarna_OnSite_Messaging' ) !== false ) {
+						remove_action( 'wp_head', array( $class, $method ) );
+					}
 				}
 			}
 		}
