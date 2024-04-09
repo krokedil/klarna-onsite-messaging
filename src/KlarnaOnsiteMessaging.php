@@ -154,6 +154,11 @@ class KlarnaOnsiteMessaging {
 			wp_register_script( 'klarna_onsite_messaging_sdk', 'https://js.klarna.com/web-sdk/v1/klarna.js', array(), false );
 		}
 
+		// Deregister the script that is registered by the KOSM plugin.
+		wp_deregister_script( 'klarna_onsite_messaging' );
+		wp_deregister_script( 'klarna-onsite-messaging' );
+		wp_deregister_script( 'onsite_messaging_script' );
+
 		$script_path = plugin_dir_url( __FILE__ ) . 'assets/js/klarna-onsite-messaging.js';
 		wp_register_script( 'klarna_onsite_messaging', $script_path, array( 'jquery', 'klarna_onsite_messaging_sdk' ), KOSM_VERSION, true );
 
@@ -195,10 +200,6 @@ class KlarnaOnsiteMessaging {
 		);
 
 		wp_enqueue_script( 'klarna_onsite_messaging' );
-
-		// Dequeue the KOSM plugin's scripts.
-		wp_dequeue_script( 'klarna-onsite-messaging' );
-		wp_dequeue_script( 'onsite_messaging_script' );
 	}
 
 	/**
