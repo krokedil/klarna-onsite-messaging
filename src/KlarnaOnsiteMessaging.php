@@ -65,7 +65,7 @@ class KlarnaOnsiteMessaging {
 
 		// Unhook the KOSM plugin's action hooks.
 		$plugin = 'klarna-onsite-messaging-for-woocommerce/klarna-onsite-messaging-for-woocommerce.php';
-		if ( is_plugin_active( $plugin ) ) {
+		if ( function_exists( 'is_plugin_active' ) && is_plugin_active( $plugin ) ) {
 
 			$hooks    = wc_get_var( $GLOBALS['wp_filter']['wp_head'] );
 			$priority = 10;
