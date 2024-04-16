@@ -57,7 +57,8 @@ class KlarnaOnsiteMessaging {
 		add_action( 'widgets_init', array( $this, 'init_widget' ) );
 
 		if ( class_exists( 'WooCommerce' ) ) {
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			// Lower hook priority to ensure the dequeue of the KOSM plugin scripts happens AFTER they have been enqueued.
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 99 );
 			add_filter( 'script_loader_tag', array( $this, 'add_data_attributes' ), 10, 2 );
 		}
 
