@@ -73,7 +73,7 @@ class KlarnaOnsiteMessaging {
 				if ( is_array( $function ) ) {
 					$class  = reset( $function );
 					$method = end( $function );
-					if ( strpos( get_class( $class ), 'Klarna_OnSite_Messaging' ) !== false ) {
+					if ( is_object( $class ) && strpos( get_class( $class ), 'Klarna_OnSite_Messaging' ) !== false ) {
 						remove_action( 'wp_head', array( $class, $method ), $priority );
 					}
 				}
