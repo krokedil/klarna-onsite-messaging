@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KOSM_VERSION', '1.0.0' );
+define( 'KOSM_VERSION', '1.0.1' );
 
 /**
  * The orchestrator class.
@@ -73,7 +73,7 @@ class KlarnaOnsiteMessaging {
 				if ( is_array( $function ) ) {
 					$class  = reset( $function );
 					$method = end( $function );
-					if ( strpos( get_class( $class ), 'Klarna_OnSite_Messaging' ) !== false ) {
+					if ( is_object( $class ) && strpos( get_class( $class ), 'Klarna_OnSite_Messaging' ) !== false ) {
 						remove_action( 'wp_head', array( $class, $method ), $priority );
 					}
 				}
