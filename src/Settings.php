@@ -106,6 +106,7 @@ class Settings {
 			'options' => array(
 				'default' => __( 'Default', 'klarna-onsite-messaging-for-woocommerce' ),
 				'dark'    => __( 'Dark', 'klarna-onsite-messaging-for-woocommerce' ),
+				'custom'  => __( 'Custom', 'klarna-onsite-messaging-for-woocommerce' ),
 			),
 		);
 		$settings['onsite_messaging_enabled_cart']          = array(
