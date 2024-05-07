@@ -97,7 +97,7 @@ class KlarnaOnsiteMessaging {
 	 */
 	public function kosm_installed_admin_notice() {
 		$plugin = 'klarna-onsite-messaging-for-woocommerce/klarna-onsite-messaging-for-woocommerce.php';
-		if ( is_plugin_active( $plugin ) || array_key_exists( $plugin, get_plugins() ) ) {
+		if ( is_plugin_active( $plugin ) ) {
 			$message = __( 'The "Klarna On-Site Messaging for WooCommerce" plugin is now integrated into Klarna Payments. Please disable the plugin.', 'klarna-onsite-messaging-for-woocommerce' );
 			printf( '<div class="notice notice-error"><p>%s</p></div>', esc_html( $message ) );
 
