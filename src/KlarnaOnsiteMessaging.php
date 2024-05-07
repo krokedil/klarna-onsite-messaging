@@ -133,7 +133,6 @@ class KlarnaOnsiteMessaging {
 		global $post;
 
 		$has_shortcode = ( ! empty( $post ) && has_shortcode( $post->post_content, 'onsite_messaging' ) );
-		// NOTE! The order of these expressions is important. Always begin by checking for shortcode as it can be placed virtually anywhere.
 		if ( ! ( $has_shortcode || is_product() || is_cart() ) ) {
 			return;
 		}
