@@ -56,30 +56,28 @@ class Utility {
 			if ( empty( $purchase_amount ) ) {
 				$product = self::get_product();
 				// If the purchase amount is not set, try to retrieve it from the product.
-				if ( ! is_a( $product, 'WC_Product' ) ) {
-					// If the product could not be retrieved, there is no way of retrieving the purchase amount.
-					// Thus, we cannot proceed with displaying the placement.
-					return;
+				if ( is_a( $product, 'WC_Product' ) ) {
+					if ( $product->is_type( 'variable' ) ) {
+						$purchase_amount = $product->get_variation_price( 'min' );
+					} elseif ( $product->is_type( 'bundle' ) ) {
+						$purchase_amount = $product->get_bundle_price( 'min' );
+					} else {
+						$purchase_amount = wc_get_price_to_display( $product );
+					}
+
+					// WOO-DISCOUNT-RULES: Check if the filter for retrieving the discounted price exists. Note: by default, quantity is 1.
+					// See: https://gist.github.com/AshlinRejo/c37a155a42c0e30beafbbad183f0c4e8.
+					if ( has_filter( 'advanced_woo_discount_rules_get_product_discount_price_from_custom_price' ) ) {
+						$maybe_price     = apply_filters( 'advanced_woo_discount_rules_get_product_discount_price_from_custom_price', $purchase_amount, $product, 1, $purchase_amount, 'discounted_price', true );
+						$purchase_amount = false !== $maybe_price ? $maybe_price : $purchase_amount;
+					}
+
+					// Force a numeric value.
+					$purchase_amount = intval( number_format( $purchase_amount * 100, 0, '', '' ) );
+					$class           = 'klarna-onsite-messaging-product';
 				}
 
-				if ( $product->is_type( 'variable' ) ) {
-					$purchase_amount = $product->get_variation_price( 'min' );
-				} elseif ( $product->is_type( 'bundle' ) ) {
-					$purchase_amount = $product->get_bundle_price( 'min' );
-				} else {
-					$purchase_amount = wc_get_price_to_display( $product );
-				}
-
-				// WOO-DISCOUNT-RULES: Check if the filter for retrieving the discounted price exists. Note: by default, quantity is 1.
-				// See: https://gist.github.com/AshlinRejo/c37a155a42c0e30beafbbad183f0c4e8.
-				if ( has_filter( 'advanced_woo_discount_rules_get_product_discount_price_from_custom_price' ) ) {
-					$maybe_price     = apply_filters( 'advanced_woo_discount_rules_get_product_discount_price_from_custom_price', $purchase_amount, $product, 1, $purchase_amount, 'discounted_price', true );
-					$purchase_amount = false !== $maybe_price ? $maybe_price : $purchase_amount;
-				}
-
-				// Force a numeric value.
-				$purchase_amount = intval( number_format( $purchase_amount * 100, 0, '', '' ) );
-				$class           = 'klarna-onsite-messaging-product';
+				// If we still cannot retrieve a product, we're most likely on a non-shop page, and there is no price amount to set.
 			}
 		} else {
 			// Cart.
