@@ -68,11 +68,11 @@ class Product extends Page {
 		if ( $this->enabled && is_product() ) {
 			$target   = apply_filters( 'klarna_onsite_messaging_product_target', $this->target );
 			$priority = apply_filters( 'klarna_onsite_messaging_product_priority', $this->priority );
-			add_action( $target, array( $this, 'parent::display_placement' ), $priority );
+			add_action( $target, array( $this, parent::class . '::display_placement' ), $priority );
 		}
 
 		if ( $this->custom_widget_enabled ) {
-			add_action( $this->custom_widget_target, array( $this, 'parent::display_placement' ), $this->custom_widget_priority );
+			add_action( $this->custom_widget_target, array( $this, parent::class . '::display_placement' ), $this->custom_widget_priority );
 		}
 	}
 }
