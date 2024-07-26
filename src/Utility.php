@@ -180,6 +180,9 @@ class Utility {
 			case 'GR': // Greece.
 				$klarna_locale = $has_english_locale ? 'en-GR' : 'el-GR';
 				break;
+			case 'HU': // Hungary.
+				$klarna_locale = $has_english_locale ? 'en-HU' : 'hu-HU';
+				break;
 			case 'IE':
 				$klarna_locale = 'en-IE';
 				break;
@@ -219,7 +222,7 @@ class Utility {
 	/**
 	 * Gets the locale needed for the specified currency.
 	 *
-	 * @return string|bool The locale on success or FALSE.
+	 * @return string|bool The locale on success or false if unsupported.
 	 */
 	public static function get_locale_from_currency() {
 		$locale       = get_locale();
@@ -244,6 +247,9 @@ class Utility {
 				break;
 			case 'GBP': // Pounds.
 				$locale = 'en-GB';
+				break;
+			case 'HUF': // Hungarian Forint.
+				$locale = ( 'hu_HU' === $locale ) ? 'hu-HU' : 'en-HU';
 				break;
 			case 'NOK': // Norwegian Kronor.
 				$locale = ( 'nn_NO' === $locale || 'nb_NO' === $locale ) ? 'no-NO' : 'en-NO';
