@@ -204,6 +204,9 @@ class Utility {
 			case 'SE':
 				$klarna_locale = $has_english_locale ? 'en-SE' : 'sv-SE';
 				break;
+			case 'SK':
+				$klarna_locale = $has_english_locale ? 'en-SK' : 'sk-SK';
+				break;
 			case 'GB':
 				$klarna_locale = 'en-GB';
 				break;
@@ -331,6 +334,9 @@ class Utility {
 				break;
 			case 'PT': // Portugal.
 				$locale = ( 'pt_PT' === $locale ) ? 'pt-PT' : 'en-PT';
+				break;
+			case 'SK': // Slovakia.
+				$locale = ( 'sk_SK' === $locale ) ? 'sk-SK' : 'en-SK';
 				break;
 			default:
 				$locale = $default_locale;
