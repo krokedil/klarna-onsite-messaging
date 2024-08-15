@@ -84,6 +84,11 @@ class Utility {
 			$purchase_amount = empty( $purchase_amount ) ? WC()->cart->get_total( 'kosm' ) * 100 : $purchase_amount;
 		}
 
+		// Allow the merchant to hide the placement based on the purchase amount.
+		if ( apply_filters( 'kosm_hide_placement', false, $purchase_amount ) ) {
+			return;
+		}
+
 		?>
 	<klarna-placement class=<?php echo esc_attr( $class ); ?>
 		data-preloaded="true"
