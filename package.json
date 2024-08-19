@@ -1,10 +1,10 @@
 {
   "name": "klarna-onsite-messaging",
-  "version": "0.0.1",
+  "version": "1.1.0",
   "author": "Krokedil <info@krokedil.se>",
   "repository": "git@github.com:krokedil/klarna-onsite-messaging.git",
   "scripts": {
-    "lint": "yarn prettier src/assets/js --paren-spacing --tab-width 4 --print-width 120 --no-semi --write",
+    "lint": "pnpx prettier src/assets/js --paren-spacing --tab-width 4 --print-width 120 --no-semi --write",
     "build": "npm run lint"
   },
   "devDependencies": {
