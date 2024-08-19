@@ -99,7 +99,7 @@ abstract class Page {
 	protected function update( $settings ) {
 		foreach ( $this->properties as $key => $value ) {
 			// Maybe get the client id from the KP settings.
-			if ( 'data_client_id' === $key && function_exists( 'kp_get_client_id' ) ) {
+			if ( 'client_id' === $key && function_exists( 'kp_get_client_id' ) ) {
 				$this->{$key} = kp_get_client_id();
 				continue;
 			}
@@ -109,10 +109,10 @@ abstract class Page {
 			} else {
 				$this->{$key} = $settings->get( $value );
 			}
-		}
 
-		if ( in_array( $this->{$key}, array( 'yes', 'no' ) ) ) {
-			$this->{$key} = wc_string_to_bool( $this->{$key} );
+			if ( in_array( $this->{$key}, array( 'yes', 'no' ) ) ) {
+				$this->{$key} = wc_string_to_bool( $this->{$key} );
+			}
 		}
 	}
 
