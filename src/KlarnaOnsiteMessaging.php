@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KOSM_VERSION', '1.0.1' );
+define( 'KOSM_VERSION', '1.1.0' );
 
 /**
  * The orchestrator class.
@@ -168,14 +168,15 @@ class KlarnaOnsiteMessaging {
 
 		if ( isset( $_GET['osmDebug'] ) ) {
 			$localize['debug_info'] = array(
-				'product'       => is_product(),
-				'cart'          => is_cart(),
-				'shortcode'     => $has_shortcode,
-				'data_client'   => ! ( empty( $this->settings->get( 'data_client_id' ) ) ),
-				'locale'        => Utility::get_locale_from_currency(),
-				'currency'      => get_woocommerce_currency(),
-				'library'       => ( wp_scripts() )->registered['klarna_onsite_messaging_sdk']->src ?? $region,
-				'base_location' => $base_location['country'],
+				'product'        => is_product(),
+				'cart'           => is_cart(),
+				'shortcode'      => $has_shortcode,
+				'data_client'    => ! ( empty( $this->settings->get( 'data_client_id' ) ) ),
+				'locale'         => Utility::get_locale_from_currency(),
+				'currency'       => get_woocommerce_currency(),
+				'library'        => ( wp_scripts() )->registered['klarna_onsite_messaging_sdk']->src ?? $region,
+				'base_location'  => $base_location['country'],
+				'hide_placement' => has_filter( 'kosm_hide_placement' ),
 			);
 
 			$product = Utility::get_product();

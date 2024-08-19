@@ -84,6 +84,11 @@ class Utility {
 			$purchase_amount = empty( $purchase_amount ) ? WC()->cart->get_total( 'kosm' ) * 100 : $purchase_amount;
 		}
 
+		// Allow the merchant to hide the placement based on the purchase amount.
+		if ( apply_filters( 'kosm_hide_placement', false, $purchase_amount ) ) {
+			return;
+		}
+
 		?>
 	<klarna-placement class=<?php echo esc_attr( $class ); ?>
 		data-preloaded="true"
@@ -180,6 +185,9 @@ class Utility {
 			case 'GR': // Greece.
 				$klarna_locale = $has_english_locale ? 'en-GR' : 'el-GR';
 				break;
+			case 'HU': // Hungary.
+				$klarna_locale = $has_english_locale ? 'en-HU' : 'hu-HU';
+				break;
 			case 'IE':
 				$klarna_locale = 'en-IE';
 				break;
@@ -204,6 +212,9 @@ class Utility {
 			case 'SE':
 				$klarna_locale = $has_english_locale ? 'en-SE' : 'sv-SE';
 				break;
+			case 'SK':
+				$klarna_locale = $has_english_locale ? 'en-SK' : 'sk-SK';
+				break;
 			case 'GB':
 				$klarna_locale = 'en-GB';
 				break;
@@ -219,7 +230,7 @@ class Utility {
 	/**
 	 * Gets the locale needed for the specified currency.
 	 *
-	 * @return string|bool The locale on success or FALSE.
+	 * @return string|bool The locale on success or false if unsupported.
 	 */
 	public static function get_locale_from_currency() {
 		$locale       = get_locale();
@@ -244,6 +255,9 @@ class Utility {
 				break;
 			case 'GBP': // Pounds.
 				$locale = 'en-GB';
+				break;
+			case 'HUF': // Hungarian Forint.
+				$locale = ( 'hu_HU' === $locale ) ? 'hu-HU' : 'en-HU';
 				break;
 			case 'NOK': // Norwegian Kronor.
 				$locale = ( 'nn_NO' === $locale || 'nb_NO' === $locale ) ? 'no-NO' : 'en-NO';
@@ -331,6 +345,9 @@ class Utility {
 				break;
 			case 'PT': // Portugal.
 				$locale = ( 'pt_PT' === $locale ) ? 'pt-PT' : 'en-PT';
+				break;
+			case 'SK': // Slovakia.
+				$locale = ( 'sk_SK' === $locale ) ? 'sk-SK' : 'en-SK';
 				break;
 			default:
 				$locale = $default_locale;
