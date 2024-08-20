@@ -179,7 +179,7 @@ class Settings {
 	public function extend_v2_settings( $settings ) {
 		$default = $this->default();
 
-		$settings['onsite_messaging']                       = array(
+		$settings['onsite_messaging']                  = array(
 			'id'          => 'kosm',
 			'title'       => 'On-Site Messaging',
 			'description' => __( 'Add personalized messaging throughout the shopper journey for higher conversion rates and increased spend.', 'klarna-onsite-messaging-for-woocommerce' ),
@@ -191,7 +191,7 @@ class Settings {
 			),
 			'type'        => 'kp_section_start',
 		);
-		$settings['placement_data_key_cart']                = array(
+		$settings['placement_data_key_cart']           = array(
 			'title'       => __( 'Cart Page Placement', 'klarna-onsite-messaging-for-woocommerce' ),
 			'type'        => 'select',
 			'description' => __( 'Select the placement for the cart page.', 'klarna-onsite-messaging-for-woocommerce' ),
@@ -203,7 +203,7 @@ class Settings {
 				'credit-promotion-auto-size' => __( 'Show without Klarna badge', 'klarna-onsite-messaging-for-woocommerce' ),
 			),
 		);
-		$settings['onsite_messaging_cart_location']         = array(
+		$settings['onsite_messaging_cart_location']    = array(
 			'title'   => __( 'Cart Page Location', 'klarna-onsite-messaging-for-woocommerce' ),
 			'desc'    => __( 'Select where to display the widget on your cart page', 'klarna-onsite-messaging-for-woocommerce' ),
 			'id'      => '',
@@ -217,7 +217,7 @@ class Settings {
 				'woocommerce_after_cart'          => __( 'Bottom of the page', 'klarna-onsite-messaging-for-woocommerce' ),
 			),
 		);
-		$settings['onsite_messaging_theme_cart']            = array(
+		$settings['onsite_messaging_theme_cart']       = array(
 			'title'   => __( 'Cart Page Theme', 'klarna-onsite-messaging-for-woocommerce' ),
 			'desc'    => __( 'Select which theme to use for the cart page.', 'klarna-onsite-messaging-for-woocommerce' ),
 			'id'      => '',
@@ -229,7 +229,7 @@ class Settings {
 				'custom'  => __( 'Custom', 'klarna-onsite-messaging-for-woocommerce' ),
 			),
 		);
-		$settings['placement_data_key_product']             = array(
+		$settings['placement_data_key_product']        = array(
 			'title'       => __( 'Product Page Placement', 'klarna-onsite-messaging-for-woocommerce' ),
 			'type'        => 'select',
 			'description' => __( 'Select the placement type that you want to show on the product pages.', 'klarna-onsite-messaging-for-woocommerce' ),
@@ -241,7 +241,7 @@ class Settings {
 				'credit-promotion-auto-size' => __( 'Show without Klarna badge', 'klarna-onsite-messaging-for-woocommerce' ),
 			),
 		);
-		$settings['onsite_messaging_product_location']      = array(
+		$settings['onsite_messaging_product_location'] = array(
 			'title'   => __( 'Product Page Location', 'klarna-onsite-messaging-for-woocommerce' ),
 			'desc'    => __( 'Select where to display the widget in your product pages', 'klarna-onsite-messaging-for-woocommerce' ),
 			'id'      => '',
@@ -257,7 +257,7 @@ class Settings {
 				'55' => __( 'After Product sharing-buttons', 'klarna-onsite-messaging-for-woocommerce' ),
 			),
 		);
-		$settings['onsite_messaging_theme_product']         = array(
+		$settings['onsite_messaging_theme_product']    = array(
 			'title'   => __( 'Product Page Theme', 'klarna-onsite-messaging-for-woocommerce' ),
 			'desc'    => __( 'Select which theme to use for the product pages.', 'klarna-onsite-messaging-for-woocommerce' ),
 			'id'      => '',
@@ -269,24 +269,7 @@ class Settings {
 				'custom'  => __( 'Custom', 'klarna-onsite-messaging-for-woocommerce' ),
 			),
 		);
-		$settings['custom_product_page_widget_enabled']     = array(
-			'title'   => __( 'Enable custom placement hook', 'klarna-onsite-messaging-for-woocommerce' ),
-			'type'    => 'checkbox',
-			'default' => $default['custom_product_page_widget_enabled'],
-		);
-		$settings['custom_product_page_placement_hook']     = array(
-			'title'    => __( 'Custom placement hook', 'klarna-onsite-messaging-for-woocommerce' ),
-			'desc_tip' => __( 'Enter a custom hook where you want the OSM widget to be placed.', 'klarna-onsite-messaging-for-woocommerce' ),
-			'type'     => 'text',
-			'default'  => $default['custom_product_page_placement_hook'],
-		);
-		$settings['custom_product_page_placement_priority'] = array(
-			'title'    => __( 'Custom placement hook priority', 'klarna-onsite-messaging-for-woocommerce' ),
-			'desc_tip' => __( 'Enter a priority for the custom hook where you want the OSM widget to be placed.', 'klarna-onsite-messaging-for-woocommerce' ),
-			'type'     => 'number',
-			'default'  => $default['custom_product_page_placement_priority'],
-		);
-		$settings['onsite_messaging_end']                   = array(
+		$settings['onsite_messaging_end']              = array(
 			'type'     => 'kp_section_end',
 			'previews' => array(
 				array(
