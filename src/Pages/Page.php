@@ -99,8 +99,8 @@ abstract class Page {
 	protected function update( $settings ) {
 		foreach ( $this->properties as $key => $value ) {
 			// Maybe get the client id from the KP settings.
-			if ( 'client_id' === $key && function_exists( 'kp_get_client_id' ) ) {
-				$this->{$key} = kp_get_client_id();
+			if ( 'client_id' === $key && function_exists( 'kp_get_client_id_by_currency' ) ) {
+				$this->{$key} = kp_get_client_id_by_currency();
 				continue;
 			}
 
