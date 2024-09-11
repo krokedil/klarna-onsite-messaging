@@ -34,7 +34,6 @@ class Product extends Page {
 	 * @var array
 	 */
 	protected $properties = array(
-		'enabled'                => 'onsite_messaging_enabled_product',
 		'theme'                  => 'onsite_messaging_theme_product',
 		'key'                    => 'placement_data_key_product',
 		'client_id'              => 'data_client_id',
@@ -68,11 +67,11 @@ class Product extends Page {
 		if ( $this->enabled && is_product() ) {
 			$target   = apply_filters( 'klarna_onsite_messaging_product_target', $this->target );
 			$priority = apply_filters( 'klarna_onsite_messaging_product_priority', $this->priority );
-			add_action( $target, array( $this, parent::class . '::display_placement' ), $priority );
+			add_action( $target, array( $this, 'display_placement' ), $priority );
 		}
 
 		if ( $this->custom_widget_enabled ) {
-			add_action( $this->custom_widget_target, array( $this, parent::class . '::display_placement' ), $this->custom_widget_priority );
+			add_action( $this->custom_widget_target, array( $this, 'display_placement' ), $this->custom_widget_priority );
 		}
 	}
 }
