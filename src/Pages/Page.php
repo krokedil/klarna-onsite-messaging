@@ -87,6 +87,7 @@ abstract class Page {
 		$this->settings   = $settings;
 
 		$this->update( $settings );
+		$this->enabled = ! empty( $this->placement_id );
 	}
 
 	/**
@@ -97,6 +98,12 @@ abstract class Page {
 	 */
 	protected function update( $settings ) {
 		foreach ( $this->properties as $key => $value ) {
+			// Maybe get the client id from the KP settings.
+			if ( 'client_id' === $key && function_exists( 'kp_get_client_id_by_currency' ) ) {
+				$this->{$key} = kp_get_client_id_by_currency();
+				continue;
+			}
+
 			if ( is_array( $value ) ) {
 				$this->{$key} = $settings->get( $value['setting'], $value['default'] );
 			} else {

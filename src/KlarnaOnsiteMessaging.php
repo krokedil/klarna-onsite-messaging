@@ -146,9 +146,10 @@ class KlarnaOnsiteMessaging {
 				$region = 'oc-library';
 			}
 		}
-		$region = apply_filters( 'kosm_region_library', $region );
+		$region    = apply_filters( 'kosm_region_library', $region );
+		$client_id = apply_filters( 'kosm_data_client_id', $this->settings->get( 'data_client_id' ) );
 
-		if ( ! empty( $this->settings->get( 'data_client_id' ) ) ) {
+		if ( ! empty( $client_id ) ) {
 			// phpcs:ignore -- The version is managed by Klarna.
 			wp_register_script( 'klarna_onsite_messaging_sdk', 'https://js.klarna.com/web-sdk/v1/klarna.js', array(), false );
 		}
@@ -171,7 +172,7 @@ class KlarnaOnsiteMessaging {
 				'product'        => is_product(),
 				'cart'           => is_cart(),
 				'shortcode'      => $has_shortcode,
-				'data_client'    => ! ( empty( $this->settings->get( 'data_client_id' ) ) ),
+				'data_client'    => ! ( empty( $client_id ) ),
 				'locale'         => Utility::get_locale_from_currency(),
 				'currency'       => get_woocommerce_currency(),
 				'library'        => ( wp_scripts() )->registered['klarna_onsite_messaging_sdk']->src ?? $region,

@@ -14,7 +14,6 @@ class Cart extends Page {
 	 * @var array
 	 */
 	protected $properties = array(
-		'enabled'      => 'onsite_messaging_enabled_cart',
 		'theme'        => 'onsite_messaging_theme_cart',
 		'key'          => 'placement_data_key_cart',
 		'client_id'    => 'data_client_id',
@@ -47,7 +46,7 @@ class Cart extends Page {
 
 			$target   = apply_filters( 'klarna_onsite_messaging_cart_target', $this->target );
 			$priority = apply_filters( 'klarna_onsite_messaging_cart_priority', $this->priority );
-			add_action( $target, array( $this, 'parent::display_placement' ), $priority );
+			add_action( $target, array( $this, 'display_placement' ), $priority );
 
 			add_action( 'woocommerce_cart_totals_after_order_total', array( $this, 'add_cart_total_input' ) );
 		}

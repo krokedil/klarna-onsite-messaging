@@ -170,20 +170,158 @@ class Settings {
 	}
 
 	/**
+	 * Extend with the V2 settings used by Klarna Payments
+	 *
+	 * @param array $settings The settings array.
+	 *
+	 * @return array
+	 */
+	public function extend_v2_settings( $settings ) {
+		$default = $this->default();
+
+		$settings['onsite_messaging']                  = array(
+			'id'          => 'kosm',
+			'title'       => 'On-Site Messaging',
+			'description' => __( 'Add personalized messaging throughout the shopper journey for higher conversion rates and increased spend.', 'klarna-onsite-messaging-for-woocommerce' ),
+			'links'       => array(
+				array(
+					'url'   => 'https://docs.klarna.com/on-site-messaging/',
+					'title' => __( 'Documentation', 'klarna-onsite-messaging-for-woocommerce' ),
+				),
+			),
+			'type'        => 'kp_section_start',
+		);
+		$settings['placement_data_key_cart']           = array(
+			'title'       => __( 'Cart Page Placement', 'klarna-onsite-messaging-for-woocommerce' ),
+			'type'        => 'select',
+			'description' => __( 'Select the placement for the cart page.', 'klarna-onsite-messaging-for-woocommerce' ),
+			'default'     => $default['placement_data_key_cart'],
+			'desc_tip'    => true,
+			'options'     => array(
+				''                           => __( 'Don\'t show', 'klarna-onsite-messaging-for-woocommerce' ),
+				'credit-promotion-badge'     => __( 'Show with Klarna badge  (recommended)', 'klarna-onsite-messaging-for-woocommerce' ),
+				'credit-promotion-auto-size' => __( 'Show without Klarna badge', 'klarna-onsite-messaging-for-woocommerce' ),
+			),
+		);
+		$settings['onsite_messaging_cart_location']    = array(
+			'title'   => __( 'Cart Page Location', 'klarna-onsite-messaging-for-woocommerce' ),
+			'desc'    => __( 'Select where to display the widget on your cart page', 'klarna-onsite-messaging-for-woocommerce' ),
+			'id'      => '',
+			'default' => $default['onsite_messaging_cart_location'],
+			'type'    => 'select',
+			'options' => array(
+				'woocommerce_cart_collaterals'    => __( 'Above Cross sell', 'klarna-onsite-messaging-for-woocommerce' ),
+				'woocommerce_before_cart_totals'  => __( 'Above cart totals', 'klarna-onsite-messaging-for-woocommerce' ),
+				'woocommerce_proceed_to_checkout' => __( 'Between cart totals and proceed to checkout button', 'klarna-onsite-messaging-for-woocommerce' ),
+				'woocommerce_after_cart_totals'   => __( 'After proceed to checkout button', 'klarna-onsite-messaging-for-woocommerce' ),
+				'woocommerce_after_cart'          => __( 'Bottom of the page', 'klarna-onsite-messaging-for-woocommerce' ),
+			),
+		);
+		$settings['onsite_messaging_theme_cart']       = array(
+			'title'   => __( 'Cart Page Theme', 'klarna-onsite-messaging-for-woocommerce' ),
+			'desc'    => __( 'Select which theme to use for the cart page.', 'klarna-onsite-messaging-for-woocommerce' ),
+			'id'      => '',
+			'default' => $default['onsite_messaging_theme_cart'],
+			'type'    => 'select',
+			'options' => array(
+				'default' => __( 'Light', 'klarna-onsite-messaging-for-woocommerce' ),
+				'dark'    => __( 'Dark', 'klarna-onsite-messaging-for-woocommerce' ),
+				'custom'  => __( 'Custom', 'klarna-onsite-messaging-for-woocommerce' ),
+			),
+		);
+		$settings['placement_data_key_product']        = array(
+			'title'       => __( 'Product Page Placement', 'klarna-onsite-messaging-for-woocommerce' ),
+			'type'        => 'select',
+			'description' => __( 'Select the placement type that you want to show on the product pages.', 'klarna-onsite-messaging-for-woocommerce' ),
+			'default'     => $default['placement_data_key_product'],
+			'desc_tip'    => true,
+			'options'     => array(
+				''                           => __( 'Don\'t show', 'klarna-onsite-messaging-for-woocommerce' ),
+				'credit-promotion-badge'     => __( 'Show with Klarna badge (recommended)', 'klarna-onsite-messaging-for-woocommerce' ),
+				'credit-promotion-auto-size' => __( 'Show without Klarna badge', 'klarna-onsite-messaging-for-woocommerce' ),
+			),
+		);
+		$settings['onsite_messaging_product_location'] = array(
+			'title'   => __( 'Product Page Location', 'klarna-onsite-messaging-for-woocommerce' ),
+			'desc'    => __( 'Select where to display the widget in your product pages', 'klarna-onsite-messaging-for-woocommerce' ),
+			'id'      => '',
+			'default' => $default['onsite_messaging_product_location'],
+			'type'    => 'select',
+			'options' => array(
+				'4'  => __( 'Above Title', 'klarna-onsite-messaging-for-woocommerce' ),
+				'7'  => __( 'Between Title and Price', 'klarna-onsite-messaging-for-woocommerce' ),
+				'15' => __( 'Between Price and Excerpt', 'klarna-onsite-messaging-for-woocommerce' ),
+				'25' => __( 'Between Excerpt and Add to cart button', 'klarna-onsite-messaging-for-woocommerce' ),
+				'35' => __( 'Between Add to cart button and Product meta', 'klarna-onsite-messaging-for-woocommerce' ),
+				'45' => __( 'Between Product meta and Product sharing buttons', 'klarna-onsite-messaging-for-woocommerce' ),
+				'55' => __( 'After Product sharing-buttons', 'klarna-onsite-messaging-for-woocommerce' ),
+			),
+		);
+		$settings['onsite_messaging_theme_product']    = array(
+			'title'   => __( 'Product Page Theme', 'klarna-onsite-messaging-for-woocommerce' ),
+			'desc'    => __( 'Select which theme to use for the product pages.', 'klarna-onsite-messaging-for-woocommerce' ),
+			'id'      => '',
+			'default' => $default['onsite_messaging_theme_product'],
+			'type'    => 'select',
+			'options' => array(
+				'default' => __( 'Light', 'klarna-onsite-messaging-for-woocommerce' ),
+				'dark'    => __( 'Dark', 'klarna-onsite-messaging-for-woocommerce' ),
+				'custom'  => __( 'Custom', 'klarna-onsite-messaging-for-woocommerce' ),
+			),
+		);
+		$settings['onsite_messaging_end']              = array(
+			'type'     => 'kp_section_end',
+			'previews' => array(
+				array(
+					'title' => __( 'Cart preview', 'klarna-onsite-messaging-for-woocommerce' ),
+					'image' => $this->get_preview_image( $this->settings['placement_data_key_cart'] ?? '', $this->settings['onsite_messaging_theme_cart'] ?? '', 'cart' ),
+				),
+				array(
+					'title' => __( 'Product preview', 'klarna-onsite-messaging-for-woocommerce' ),
+					'image' => $this->get_preview_image( $this->settings['placement_data_key_product'] ?? '', $this->settings['onsite_messaging_theme_product'] ?? '', 'product' ),
+				),
+			),
+		);
+
+		return $settings;
+	}
+
+	/**
+	 * Get the cart or product page preview image url.
+	 *
+	 * @param string $key The key for the preview image.
+	 * @param string $theme The theme for the preview image.
+	 * @param string $type The type of preview image.
+	 *
+	 * @return string The preview image url.
+	 */
+	private function get_preview_image( $key, $theme, $type ) {
+		// Convert default values to proper values.
+		if ( 'default' === $theme || 'custom' === $theme || '' === $theme ) {
+			$theme = 'light';
+		}
+
+		if ( '' === $key ) {
+			$key = 'credit-promotion-badge';
+		}
+
+		$url = plugin_dir_url( __FILE__ ) . "assets/img/preview-$type-$theme-$key.jpg";
+		return $url;
+	}
+
+	/**
 	 * Returns the default state for all the mutable
 	 *
 	 * @return array<string,string|int>
 	 */
 	private function default() {
 		return array(
-			'onsite_messaging_test_mode'             => 'yes',
-			'data_client_id'                         => '',
 			'onsite_messaging_enabled_product'       => 'yes',
-			'placement_data_key_product'             => '',
+			'placement_data_key_product'             => 'credit-promotion-badge',
 			'onsite_messaging_product_location'      => '45',
 			'onsite_messaging_theme_product'         => 'default',
 			'onsite_messaging_enabled_cart'          => 'yes',
-			'placement_data_key_cart'                => '',
+			'placement_data_key_cart'                => 'credit-promotion-badge',
 			'onsite_messaging_cart_location'         => 'woocommerce_cart_collaterals',
 			'onsite_messaging_theme_cart'            => '',
 			'custom_product_page_widget_enabled'     => 'no',
