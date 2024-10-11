@@ -133,7 +133,7 @@ class KlarnaOnsiteMessaging {
 		global $post;
 
 		$has_shortcode = ( ! empty( $post ) && has_shortcode( $post->post_content, 'onsite_messaging' ) );
-		if ( ! ( $has_shortcode || is_product() || is_cart() ) ) {
+		if ( ! ( $has_shortcode || is_cart() || is_woocommerce() ) ) {
 			return;
 		}
 
@@ -179,6 +179,10 @@ class KlarnaOnsiteMessaging {
 				'base_location'  => $base_location['country'],
 				'hide_placement' => has_filter( 'kosm_hide_placement' ),
 			);
+
+			if ( 'EUR' === $localize['debug_info']['currency'] ) {
+				$localize['debug_info']['force_locale'] = has_filter( 'kosm_force_euro_locale' );
+			}
 
 			$product = Utility::get_product();
 			if ( ! empty( $product ) ) {
