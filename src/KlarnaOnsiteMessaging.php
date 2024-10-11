@@ -180,6 +180,10 @@ class KlarnaOnsiteMessaging {
 				'hide_placement' => has_filter( 'kosm_hide_placement' ),
 			);
 
+			if ( 'EUR' === $localize['debug_info']['currency'] ) {
+				$localize['debug_info']['force_locale'] = has_filter( 'kosm_force_euro_locale' );
+			}
+
 			$product = Utility::get_product();
 			if ( ! empty( $product ) ) {
 				$type                                   = $product->get_type();
