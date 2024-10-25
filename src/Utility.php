@@ -16,8 +16,6 @@ class Utility {
 	 * @return void
 	 */
 	public static function print_placement( $data ) {
-		self::enqueue_scripts();
-
 		// Normalize keys.
 		foreach ( $data as $key => $value ) {
 			unset( $data[ $key ] );
@@ -357,71 +355,6 @@ class Utility {
 		}
 
 		return $locale;
-	}
-
-	/**
-	 * Enqueue the Klarna Onsite Messaging script.
-	 *
-	 * @return void
-	 */
-	public static function enqueue_scripts() {
-		global $post;
-
-		$has_shortcode = ( ! empty( $post ) && has_shortcode( $post->post_content, 'onsite_messaging' ) );
-		if ( ! ( $has_shortcode || is_product() || is_cart() ) ) {
-			return;
-		}
-
-		$region        = 'eu-library';
-		$base_location = wc_get_base_location();
-		if ( is_array( $base_location ) && isset( $base_location['country'] ) ) {
-			if ( in_array( $base_location['country'], array( 'US', 'CA' ) ) ) {
-				$region = 'na-library';
-			} elseif ( in_array( $base_location['country'], array( 'AU', 'NZ' ) ) ) {
-				$region = 'oc-library';
-			}
-		}
-		$region = apply_filters( 'kosm_region_library', $region );
-
-		$localize = array(
-			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-			'get_cart_total_url' => \WC_AJAX::get_endpoint( 'kosm_get_cart_total' ),
-		);
-
-		if ( isset( $_GET['osmDebug'] ) ) {
-			$localize['debug_info'] = array(
-				'product'        => is_product(),
-				'cart'           => is_cart(),
-				'shortcode'      => $has_shortcode,
-				'data_client'    => ! ( empty( $client_id ) ),
-				'locale'         => self::get_locale_from_currency(),
-				'currency'       => get_woocommerce_currency(),
-				'library'        => ( wp_scripts() )->registered['klarna_onsite_messaging_sdk']->src ?? $region,
-				'base_location'  => $base_location['country'],
-				'hide_placement' => has_filter( 'kosm_hide_placement' ),
-			);
-
-			$product = self::get_product();
-			if ( ! empty( $product ) ) {
-				$type                                   = $product->get_type();
-				$localize['debug_info']['product_type'] = $type;
-				if ( method_exists( $product, 'get_available_variations' ) ) {
-					foreach ( $product->get_available_variations() as $variation ) {
-						$attribute                                   = wc_get_var( $variation['attributes'] );
-						$localize['debug_info']['default_variation'] = reset( $attribute );
-						break;
-					}
-				}
-			}
-		}
-
-		wp_localize_script(
-			'klarna_onsite_messaging',
-			'klarna_onsite_messaging_params',
-			$localize
-		);
-
-		wp_enqueue_script( 'klarna_onsite_messaging' );
 	}
 }
 
