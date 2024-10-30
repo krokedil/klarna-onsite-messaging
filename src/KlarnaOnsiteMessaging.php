@@ -132,9 +132,11 @@ class KlarnaOnsiteMessaging {
 	public function enqueue_scripts() {
 		global $post;
 
-		$has_shortcode = ( ! empty( $post ) && has_shortcode( $post->post_content, 'onsite_messaging' ) );
-		if ( ! ( $has_shortcode || is_product() || is_cart() ) ) {
-			return;
+		if ( ! apply_filters( 'kosm_show_everywhere', false ) ) {
+			$has_shortcode = ( ! empty( $post ) && has_shortcode( $post->post_content, 'onsite_messaging' ) );
+			if ( ! ( $has_shortcode || is_product() || is_cart() ) ) {
+				return;
+			}
 		}
 
 		$region        = 'eu-library';
