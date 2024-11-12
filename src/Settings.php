@@ -94,7 +94,7 @@ class Settings {
 				'25' => __( 'Between Excerpt and Add to cart button', 'klarna-onsite-messaging-for-woocommerce' ),
 				'35' => __( 'Between Add to cart button and Product meta', 'klarna-onsite-messaging-for-woocommerce' ),
 				'45' => __( 'Between Product meta and Product sharing buttons', 'klarna-onsite-messaging-for-woocommerce' ),
-				'55' => __( 'After Product sharing-buttons', 'klarna-onsite-messaging-for-woocommerce' ),
+				'55' => __( 'After Product sharing buttons', 'klarna-onsite-messaging-for-woocommerce' ),
 			),
 		);
 		$settings['onsite_messaging_theme_product']         = array(
@@ -129,7 +129,7 @@ class Settings {
 			'default' => $default['onsite_messaging_cart_location'],
 			'type'    => 'select',
 			'options' => array(
-				'woocommerce_cart_collaterals'    => __( 'Above Cross sell', 'klarna-onsite-messaging-for-woocommerce' ),
+				'woocommerce_cart_collaterals'    => __( 'Above cross sell', 'klarna-onsite-messaging-for-woocommerce' ),
 				'woocommerce_before_cart_totals'  => __( 'Above cart totals', 'klarna-onsite-messaging-for-woocommerce' ),
 				'woocommerce_proceed_to_checkout' => __( 'Between cart totals and proceed to checkout button', 'klarna-onsite-messaging-for-woocommerce' ),
 				'woocommerce_after_cart_totals'   => __( 'After proceed to checkout button', 'klarna-onsite-messaging-for-woocommerce' ),
@@ -185,8 +185,8 @@ class Settings {
 			'description' => __( 'Add personalized messaging throughout the shopper journey for higher conversion rates and increased spend.', 'klarna-onsite-messaging-for-woocommerce' ),
 			'links'       => array(
 				array(
-					'url'   => 'https://docs.klarna.com/on-site-messaging/',
-					'title' => __( 'Documentation', 'klarna-onsite-messaging-for-woocommerce' ),
+					'url'   => 'https://docs.klarna.com/conversion-boosters/on-site-messaging/additional-resources/osm-customise-merchant-portal/',
+					'title' => __( 'Further customization is possible in the Klarna Merchant Portal.', 'klarna-onsite-messaging-for-woocommerce' ),
 				),
 			),
 			'type'        => 'kp_section_start',
@@ -210,7 +210,7 @@ class Settings {
 			'default' => $default['onsite_messaging_cart_location'],
 			'type'    => 'select',
 			'options' => array(
-				'woocommerce_cart_collaterals'    => __( 'Above Cross sell', 'klarna-onsite-messaging-for-woocommerce' ),
+				'woocommerce_cart_collaterals'    => __( 'Above cross sell', 'klarna-onsite-messaging-for-woocommerce' ),
 				'woocommerce_before_cart_totals'  => __( 'Above cart totals', 'klarna-onsite-messaging-for-woocommerce' ),
 				'woocommerce_proceed_to_checkout' => __( 'Between cart totals and proceed to checkout button', 'klarna-onsite-messaging-for-woocommerce' ),
 				'woocommerce_after_cart_totals'   => __( 'After proceed to checkout button', 'klarna-onsite-messaging-for-woocommerce' ),
@@ -254,16 +254,17 @@ class Settings {
 				'25' => __( 'Between Excerpt and Add to cart button', 'klarna-onsite-messaging-for-woocommerce' ),
 				'35' => __( 'Between Add to cart button and Product meta', 'klarna-onsite-messaging-for-woocommerce' ),
 				'45' => __( 'Between Product meta and Product sharing buttons', 'klarna-onsite-messaging-for-woocommerce' ),
-				'55' => __( 'After Product sharing-buttons', 'klarna-onsite-messaging-for-woocommerce' ),
+				'55' => __( 'After Product sharing buttons', 'klarna-onsite-messaging-for-woocommerce' ),
 			),
 		);
 		$settings['onsite_messaging_theme_product']    = array(
-			'title'   => __( 'Product Page Theme', 'klarna-onsite-messaging-for-woocommerce' ),
-			'desc'    => __( 'Select which theme to use for the product pages.', 'klarna-onsite-messaging-for-woocommerce' ),
-			'id'      => '',
-			'default' => $default['onsite_messaging_theme_product'],
-			'type'    => 'select',
-			'options' => array(
+			'title'       => __( 'Product Page Theme', 'klarna-onsite-messaging-for-woocommerce' ),
+			'description' => __( 'The On-site messaging placements come in Light and Dark theme to fit into the look and feel of your website.', 'klarna-onsite-messaging-for-woocommerce' ),
+			'id'          => '',
+			'default'     => $default['onsite_messaging_theme_product'],
+			'desc_tip'    => true,
+			'type'        => 'select',
+			'options'     => array(
 				'default' => __( 'Light', 'klarna-onsite-messaging-for-woocommerce' ),
 				'dark'    => __( 'Dark', 'klarna-onsite-messaging-for-woocommerce' ),
 				'custom'  => __( 'Custom', 'klarna-onsite-messaging-for-woocommerce' ),
