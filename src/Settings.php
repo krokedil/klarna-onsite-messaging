@@ -185,8 +185,8 @@ class Settings {
 			'description' => __( 'Add personalized messaging throughout the shopper journey for higher conversion rates and increased spend.', 'klarna-onsite-messaging-for-woocommerce' ),
 			'links'       => array(
 				array(
-					'url'   => 'https://docs.klarna.com/on-site-messaging/',
-					'title' => __( 'Documentation', 'klarna-onsite-messaging-for-woocommerce' ),
+					'url'   => 'https://docs.klarna.com/conversion-boosters/on-site-messaging/additional-resources/osm-customise-merchant-portal/',
+					'title' => __( 'Further customization is possible in the Klarna Merchant Portal.', 'klarna-onsite-messaging-for-woocommerce' ),
 				),
 			),
 			'type'        => 'kp_section_start',
