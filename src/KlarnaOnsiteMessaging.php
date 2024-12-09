@@ -116,7 +116,7 @@ class KlarnaOnsiteMessaging {
 			return $tag;
 		}
 
-		$environment    = 'yes' === $this->settings->get( 'onsite_messaging_test_mode' ) ? 'playground' : 'production';
+		$environment    = wc_string_to_bool( $this->settings->get( 'onsite_messaging_test_mode' ) ) ? 'playground' : 'production';
 		$data_client_id = apply_filters( 'kosm_data_client_id', $this->settings->get( 'data_client_id' ) );
 		$tag            = str_replace( ' src', ' async src', $tag );
 		$tag            = str_replace( '></script>', " data-environment={$environment} data-client-id='{$data_client_id}'></script>", $tag );
