@@ -317,6 +317,7 @@ class Settings {
 	 */
 	private function default() {
 		return array(
+			'onsite_messaging_test_mode'             => 'no',
 			'onsite_messaging_enabled_product'       => 'yes',
 			'placement_data_key_product'             => 'credit-promotion-badge',
 			'onsite_messaging_product_location'      => '45',
