@@ -191,6 +191,13 @@ class Settings {
 			),
 			'type'        => 'kp_section_start',
 		);
+		$settings['onsite_messaging_enabled']          = array(
+			'title'       => __( 'Enable/Disable', 'klarna-onsite-messaging-for-woocommerce' ),
+			'label'       => __( 'Enable On-site Messaging', 'klarna-onsite-messaging-for-woocommerce' ),
+			'type'        => 'checkbox',
+			'description' => '',
+			'default'     => 'no',
+		);
 		$settings['placement_data_key_cart']           = array(
 			'title'       => __( 'Cart Page Placement', 'klarna-onsite-messaging-for-woocommerce' ),
 			'type'        => 'select',
@@ -317,6 +324,7 @@ class Settings {
 	 */
 	private function default() {
 		return array(
+			'onsite_messaging_enabled'               => 'no',
 			'onsite_messaging_enabled_product'       => 'yes',
 			'placement_data_key_product'             => 'credit-promotion-badge',
 			'onsite_messaging_product_location'      => '45',
@@ -329,5 +337,15 @@ class Settings {
 			'custom_product_page_placement_hook'     => 'woocommerce_single_product_summary',
 			'custom_product_page_placement_priority' => 35,
 		);
+	}
+
+
+	/**
+	 * Get the enabled status for On-Site Messaging.
+	 *
+	 * @return bool
+	 */
+	public function is_enabled() {
+		return 'yes' === $this->settings['onsite_messaging_enabled'] ?? 'no';
 	}
 }
