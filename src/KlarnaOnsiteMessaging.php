@@ -54,6 +54,11 @@ class KlarnaOnsiteMessaging {
 		$this->cart      = new Cart( $this->settings );
 		$this->shortcode = new Shortcode();
 
+		// Skip if On-Site Messaging is not enabled.
+		if ( ! $this->settings()->is_enabled() ) {
+			return;
+		}
+
 		add_action( 'widgets_init', array( $this, 'init_widget' ) );
 
 		if ( class_exists( 'WooCommerce' ) ) {
