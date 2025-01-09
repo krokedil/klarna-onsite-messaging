@@ -120,8 +120,8 @@ class KlarnaOnsiteMessaging {
 		if ( 'klarna_onsite_messaging_sdk' !== $handle ) {
 			return $tag;
 		}
-
-		$environment    = 'yes' === $this->settings->get( 'onsite_messaging_test_mode' ) ? 'playground' : 'production';
+		$settings       = get_option( 'woocommerce_klarna_payments_settings', array() );
+		$environment    = isset( $settings['testmode'] ) && 'yes' === $settings['testmode'] ? 'playground' : 'production';
 		$data_client_id = apply_filters( 'kosm_data_client_id', $this->settings->get( 'data_client_id' ) );
 		$tag            = str_replace( ' src', ' async src', $tag );
 		$tag            = str_replace( '></script>', " data-environment={$environment} data-client-id='{$data_client_id}'></script>", $tag );
