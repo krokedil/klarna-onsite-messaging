@@ -109,8 +109,16 @@ class Utility {
 		global $product;
 		global $post;
 
-		$product = is_a( $product, 'WC_Product' ) ? $product : wc_get_product( $post->ID );
-		return is_a( $product, 'WC_Product' ) ? $product : false;
+		if ( is_a( $product, 'WC_Product' ) ) {
+			return $product;
+		}
+
+		if ( isset( $post ) && is_a( $post, 'WP_Post' ) ) {
+			$product = wc_get_product( $post->ID );
+			return is_a( $product, 'WC_Product' ) ? $product : false;
+		}
+
+		return false;
 	}
 
 	/**
