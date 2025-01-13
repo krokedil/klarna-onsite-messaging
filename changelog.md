@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ------------------
-## [1.2.2] - 2025-01-13
+## [1.3.0] - 2025-01-13
 ### Added
 * Added enable/disable setting for KOSM.
 
