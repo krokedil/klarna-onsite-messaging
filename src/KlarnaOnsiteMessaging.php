@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KOSM_VERSION', '1.3.0' );
+define( 'KOSM_VERSION', '1.3.1' );
 
 /**
  * The orchestrator class.
@@ -49,15 +49,16 @@ class KlarnaOnsiteMessaging {
 	 * @param array $settings Any existing KOSM settings.
 	 */
 	public function __construct( $settings ) {
-		$this->settings  = new Settings( $settings );
-		$this->product   = new Product( $this->settings );
-		$this->cart      = new Cart( $this->settings );
-		$this->shortcode = new Shortcode();
+		$this->settings = new Settings( $settings );
 
 		// Skip if On-Site Messaging is not enabled.
 		if ( ! $this->settings()->is_enabled() ) {
 			return;
 		}
+
+		$this->product   = new Product( $this->settings );
+		$this->cart      = new Cart( $this->settings );
+		$this->shortcode = new Shortcode();
 
 		add_action( 'widgets_init', array( $this, 'init_widget' ) );
 

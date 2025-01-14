@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ------------------
+## [1.3.1] - 2025-01-14
+### Fix
+* Resolved KOSM not being disabled by setting in some environments.
+
 ## [1.3.0] - 2025-01-13
 ### Added
 * Added enable/disable setting for KOSM.
