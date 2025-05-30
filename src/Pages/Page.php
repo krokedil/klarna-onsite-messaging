@@ -85,7 +85,6 @@ abstract class Page {
 	public function __construct( $settings, $properties ) {
 		$this->properties = $properties;
 		$this->settings   = $settings;
-		$this->enabled    = ! empty( $this->placement_id );
 
 		add_action( 'init', array( $this, 'init_settings' ), 10, 0 );
 	}
@@ -97,6 +96,7 @@ abstract class Page {
 	 */
 	public function init_settings() {
 		$this->update( $this->settings );
+		$this->enabled = ! empty( $this->placement_id );
 	}
 
 	/**
