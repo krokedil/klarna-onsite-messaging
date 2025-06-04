@@ -58,7 +58,7 @@ class Utility {
 				// If the purchase amount is not set, try to retrieve it from the product.
 				if ( is_a( $product, 'WC_Product' ) ) {
 					if ( $product->is_type( 'variable' ) ) {
-						$purchase_amount = $product->get_variation_price( 'min' );
+						$purchase_amount = $product->get_variation_price( 'min', true );
 					} elseif ( $product->is_type( 'bundle' ) ) {
 						$purchase_amount = $product->get_bundle_price( 'min' );
 					} else {
