@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fix
-* Resolved text domains sometimes loading too early, resulting in the notice "_load_textdomain_just_in_time was called incorrectly".
+* Resolved notice "_load_textdomain_just_in_time was called incorrectly".
 
 ------------------
 ## [1.3.1] - 2025-01-14
