@@ -346,6 +346,11 @@ class Settings {
 	 * @return bool
 	 */
 	public function is_enabled() {
+		$kp_unavailable_feature_ids = get_option( 'kp_unavailable_feature_ids', array() );
+		if ( in_array( 'onsite_messaging', $kp_unavailable_feature_ids ) ) {
+			return false;
+		}
+
 		return 'yes' === $this->settings['onsite_messaging_enabled'] ?? 'yes';
 	}
 }
