@@ -5,11 +5,18 @@ namespace Krokedil\KlarnaOnsiteMessaging;
  * Class for the WP widget.
  */
 class Widget extends \WP_Widget {
+	/**
+	 * Instance of the main KlarnaOnsiteMessaging class.
+	 *
+	 * @var KlarnaOnsiteMessaging
+	 */
+	private $onsite_messaging;
 
 	/**
 	 * Class constructor.
 	 */
-	public function __construct() {
+	public function __construct( $onsite_messaging ) {
+		$this->onsite_messaging = $onsite_messaging;
 		parent::__construct(
 			'klarna_osm', // Base ID.
 			__( 'Klarna On-Site Messaging', 'klarna-onsite-messaging-for-woocommerce' ), // Name.
@@ -26,7 +33,7 @@ class Widget extends \WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
-		wp_enqueue_script( 'klarna_onsite_messaging_sdk' );
+		$this->onsite_messaging->enqueue_scripts( true );
 
 		$title = apply_filters( 'widget_title', $instance['title'] );
 
