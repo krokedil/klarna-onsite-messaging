@@ -11,11 +11,15 @@ if (params?.textContent) {
 
 const klarna_onsite_messaging = {
     Klarna: null,
-    placement: null,
+    placements: [],
     params: null,
 
     refresh: function () {
-        klarna_onsite_messaging.placement.unmount();
+        // Loop each placement and unmount.
+        klarna_onsite_messaging.placements.forEach( placement => {
+            placement.unmount();
+        } );
+
         klarna_onsite_messaging.mount();
     },
 
@@ -155,18 +159,24 @@ const klarna_onsite_messaging = {
     },
 
     mount: async function () {
-        const placement = document.querySelector('klarna-placement');
+        const placements = document.querySelectorAll('klarna-placement');
 
-        if ( ! placement ) {
+        if ( ! placements.length ) {
             return;
         }
 
-        klarna_onsite_messaging.placement = klarna_onsite_messaging.Klarna.Messaging.placement({
-            key: placement.dataset.key,
-            amount: parseInt(placement.dataset.purchaseAmount),
-            locale: placement.dataset.locale,
-            theme: placement.dataset.theme || 'default',
-        }).mount(placement);
+        const klarnaPlacements = [];
+        for (const placement of placements) {
+            const tmpPlacement = klarna_onsite_messaging.Klarna.Messaging.placement({
+                key: placement.dataset.key,
+                amount: parseInt(placement.dataset.purchaseAmount),
+                locale: placement.dataset.locale,
+                theme: placement.dataset.theme || 'default',
+            }).mount(placement);
+            klarnaPlacements.push(tmpPlacement);
+        }
+
+        klarna_onsite_messaging.placements = klarnaPlacements;
     }
 }
 

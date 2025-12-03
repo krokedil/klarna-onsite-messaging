@@ -82,7 +82,6 @@ class KlarnaOnsiteMessaging {
 		if ( class_exists( 'WooCommerce' ) ) {
 			// Lower hook priority to ensure the dequeue of the KOSM plugin scripts happens AFTER they have been enqueued.
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 99 );
-			//add_filter( 'kp_websdk_v1_data_attributes', array( $this, 'add_websdk_attributes' ) );
 		}
 
 		add_action( 'admin_notices', array( $this, 'kosm_installed_admin_notice' ) );
@@ -110,7 +109,7 @@ class KlarnaOnsiteMessaging {
 	 * @return void
 	 */
 	public function init_widget() {
-		register_widget( new Widget() );
+		register_widget( new Widget( $this ) );
 	}
 
 	/**
@@ -149,10 +148,10 @@ class KlarnaOnsiteMessaging {
 	 *
 	 * @return void
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $show_everywhere = false ) {
 		global $post;
 
-		if ( ! apply_filters( 'kosm_show_everywhere', false ) ) {
+		if ( ! apply_filters( 'kosm_show_everywhere', $show_everywhere ) ) {
 			$has_shortcode = ( ! empty( $post ) && has_shortcode( $post->post_content, 'onsite_messaging' ) );
 			if ( ! ( $has_shortcode || is_product() || is_cart() ) ) {
 				return;
@@ -177,7 +176,7 @@ class KlarnaOnsiteMessaging {
 		wp_deregister_script( 'onsite_messaging_script' );
 
 		$script_path = plugin_dir_url( __FILE__ ) . 'assets/js/klarna-onsite-messaging.js';
-		wp_register_script_module( '@klarna/onsite_messaging', $script_path, array( 'jquery', '@klarna/interoperability_token' ), KOSM_VERSION );
+		wp_register_script_module( '@klarna/onsite_messaging', $script_path, array('@klarna/interoperability_token' ), KOSM_VERSION );
 
 		$localize = array(
 			'client_id'          => $client_id,
