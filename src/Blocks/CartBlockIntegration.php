@@ -1,5 +1,5 @@
 <?php
-namespace KlarnaOnsiteMessaging\Blocks;
+namespace Krokedil\KlarnaOnsiteMessaging\Blocks;
 
 use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
 
@@ -23,9 +23,8 @@ class CartBlockIntegration implements IntegrationInterface {
 	 * @return void
 	 */
 	public function initialize() {
-		$script_url = plugin_dir_url( __FILE__ ) . 'assets/js/block-extension.js';
-
-		wp_register_script( 'osm-cart-block-integration-script', $script_url, array( 'wp-blocks', 'wp-element', 'wp-editor' ), filemtime( $script_url ), true );
+		$script_path = plugin_dir_url( __FILE__ ) . 'assets/js/osm-cart-block-integration.js';
+		wp_register_script( 'osm-cart-block-integration-script', $script_path, array( 'wp-blocks', 'wp-element', 'wp-editor' ), KOSM_VERSION, true );
 	}
 
 	/**
