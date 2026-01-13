@@ -1,16 +1,18 @@
-// assets/js/block-extension.js
 const { registerPlugin } = wp.plugins;
 const { ExperimentalOrderMeta } = wc.blocksCheckout; // blocksCheckout is used for both the Cart and Checkout blocks.
 
 const KlarnaPlacement = ({ key, locale, theme, purchaseAmount }) => (
-    <klarna-placement
-        className="klarna-onsite-messaging"
-        data-preloaded="true"
-        data-key={key}
-        data-locale={locale}
-        data-theme={theme}
-        data-purchase-amount={purchaseAmount}
-    >OSM should be placed here</klarna-placement>
+    React.createElement(
+        'klarna-placement',
+        {
+            className: 'klarna-onsite-messaging',
+            'data-preloaded': 'true',
+            'data-key': key,
+            'data-locale': locale,
+            'data-theme': theme,
+            'data-purchase-amount': purchaseAmount
+        }
+    )
 );
 
 const render = () => {
