@@ -6,6 +6,7 @@ use Krokedil\Klarna\Features;
 use Krokedil\Klarna\PluginFeatures;
 use Krokedil\KlarnaOnsiteMessaging\Pages\Product;
 use Krokedil\KlarnaOnsiteMessaging\Pages\Cart;
+use Krokedil\KlarnaOnsiteMessaging\Blocks\CartBlockIntegration;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -101,6 +102,9 @@ class KlarnaOnsiteMessaging {
 				}
 			}
 		}
+
+		// Register WooCommerce Blocks Cart Block integration.
+		add_action( 'woocommerce_blocks_loaded', array( $this, 'register_wc_cart_block_integration' ) );
 	}
 
 	/**
@@ -138,7 +142,7 @@ class KlarnaOnsiteMessaging {
 		$data_client_id = apply_filters( 'kosm_data_client_id', $this->settings->get( 'data_client_id' ) );
 
 		$attributes['data-environment'] = $environment;
-		$attributes['data-client-id']    = $data_client_id;
+		$attributes['data-client-id']   = $data_client_id;
 
 		return $attributes;
 	}
@@ -176,7 +180,7 @@ class KlarnaOnsiteMessaging {
 		wp_deregister_script( 'onsite_messaging_script' );
 
 		$script_path = plugin_dir_url( __FILE__ ) . 'assets/js/klarna-onsite-messaging.js';
-		wp_register_script_module( '@klarna/onsite_messaging', $script_path, array('@klarna/interoperability_token' ), KOSM_VERSION );
+		wp_register_script_module( '@klarna/onsite_messaging', $script_path, array( '@klarna/interoperability_token' ), KOSM_VERSION );
 
 		$localize = array(
 			'client_id'          => $client_id,
@@ -192,7 +196,7 @@ class KlarnaOnsiteMessaging {
 				'data_client'    => ! ( empty( $client_id ) ),
 				'locale'         => Utility::get_locale_from_currency(),
 				'currency'       => get_woocommerce_currency(),
-				'library'        => ( wp_scripts() )->registered[KP_Assets::KP_WEBSDK_HANDLE_V2]->src ?? $region,
+				'library'        => ( wp_scripts() )->registered[ KP_Assets::KP_WEBSDK_HANDLE_V2 ]->src ?? $region,
 				'base_location'  => $base_location['country'],
 				'hide_placement' => has_filter( 'kosm_hide_placement' ),
 			);
@@ -249,5 +253,25 @@ class KlarnaOnsiteMessaging {
 	 */
 	public function shortcode() {
 		return $this->shortcode;
+	}
+
+	/**
+	 * Register WooCommerce Blocks Cart Block integration.
+	 *
+	 * @return void
+	 */
+	public function register_wc_cart_block_integration() {
+		// Return if blocks does not exist for backwards compatibility.
+		if ( ! class_exists( 'Automattic\WooCommerce\Blocks\Package' ) ) {
+			return;
+		}
+
+		// Register the block integration for the cart block.
+		add_action(
+			'woocommerce_blocks_cart_block_registration',
+			function ( $integration_registry ) {
+				$integration_registry->register( new CartBlockIntegration() );
+			}
+		);
 	}
 }
