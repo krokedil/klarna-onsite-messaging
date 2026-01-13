@@ -179,7 +179,7 @@ class KlarnaOnsiteMessaging {
 		wp_deregister_script( 'klarna-onsite-messaging' );
 		wp_deregister_script( 'onsite_messaging_script' );
 
-		$script_path = plugin_dir_url( __FILE__ ) . 'assets/js/klarna-onsite-messaging.js';
+		$script_path = plugin_dir_url( __DIR__ ) . 'assets/js/klarna-onsite-messaging.js';
 		wp_register_script_module( '@klarna/onsite_messaging', $script_path, array( '@klarna/interoperability_token' ), KOSM_VERSION );
 
 		$localize = array(
