@@ -53,8 +53,8 @@ class CartBlockIntegration implements IntegrationInterface {
 	 * @return array
 	 */
 	public function get_script_data() {
-		$key             = $settings['placement_data_key_product'] ?? '';
-		$theme           = $settings['onsite_messaging_theme_cart'] ?? 'default';
+		$key             = $settings['placement_data_key_cart'] ?? 'credit-promotion-badge';
+		$theme           = $settings['onsite_messaging_theme_cart'] ?? '';
 		$wc_cart_total   = WC()->cart ? WC()->cart->get_total( 'edit' ) : 0;
 		$purchase_amount = (int) ( round( floatval( str_replace( array( ',', '.' ), '', $wc_cart_total ) ) ) );
 		$locale          = Utility::get_locale_from_currency();

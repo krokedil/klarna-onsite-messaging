@@ -7,6 +7,7 @@ const KlarnaPlacement = ({ key, locale, theme, purchaseAmount }) => (
         {
             className: 'klarna-onsite-messaging',
             'data-preloaded': 'true',
+            'class': 'klarna-onsite-messaging',
             'data-key': key,
             'data-locale': locale,
             'data-theme': theme,
