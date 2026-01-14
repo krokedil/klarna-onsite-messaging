@@ -53,14 +53,11 @@ class CartBlockIntegration implements IntegrationInterface {
 	 * @return array
 	 */
 	public function get_script_data() {
-		$saved_settings = get_option( 'klarna_onsite_messaging_settings', array() );
-		$settings       = new Settings( $saved_settings );
-
-		$key             = apply_filters( 'kosm_cart_block_key', '' );
-		$theme           = apply_filters( 'kosm_cart_block_theme', 'default' );
-		$purchase_amount = apply_filters( 'kosm_cart_block_purchase_amount', '' );
+		$key             = $settings['placement_data_key_product'] ?? '';
+		$theme           = $settings['onsite_messaging_theme_cart'] ?? 'default';
+		$wc_cart_total   = WC()->cart ? WC()->cart->get_total( 'edit' ) : 0;
+		$purchase_amount = (int) ( round( floatval( str_replace( array( ',', '.' ), '', $wc_cart_total ) ) ) );
 		$locale          = Utility::get_locale_from_currency();
-
 		return array(
 			'key'             => $key,
 			'theme'           => $theme,
