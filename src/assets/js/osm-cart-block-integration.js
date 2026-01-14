@@ -1,7 +1,6 @@
-const { registerPlugin } = wp.plugins;
-const { ExperimentalOrderMeta } = wc.blocksCheckout;
+const { registerPlugin: RegisterPluginOSM } = wp.plugins;
 
-const KlarnaPlacement = ({ klarnaKey, locale, theme, purchaseAmount }) => (
+const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount }) => (
     React.createElement(
         'klarna-placement',
         {
@@ -16,7 +15,7 @@ const KlarnaPlacement = ({ klarnaKey, locale, theme, purchaseAmount }) => (
     )
 );
 
-const render = () => {
+const renderOSM = () => {
     const osmData =
 	window.wc?.wcSettings?.getSetting(
 		'osm-cart-block-integration_data',
@@ -26,7 +25,7 @@ const render = () => {
         React.createElement(
             ExperimentalOrderMeta,
             null,
-            React.createElement(KlarnaPlacement, {
+            React.createElement(ElementOSM, {
                 klarnaKey: osmData.key || '',
                 locale: osmData.locale || '',
                 theme: osmData.theme || '',
@@ -36,7 +35,7 @@ const render = () => {
     );
 };
 
-registerPlugin('osm-cart-block-integration', {
-    render,
+RegisterPluginOSM('osm-cart-block-integration', {
+    render: renderOSM,
     scope: 'woocommerce-checkout',
 });
