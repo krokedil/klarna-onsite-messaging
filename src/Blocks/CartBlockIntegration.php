@@ -54,7 +54,7 @@ class CartBlockIntegration implements IntegrationInterface {
 		$key             = apply_filters( 'kosm_cart_block_key', '' );
 		$theme           = apply_filters( 'kosm_cart_block_theme', 'default' );
 		$purchase_amount = apply_filters( 'kosm_cart_block_purchase_amount', '' );
-		$locale          = Utility::get_locale_from_currency();
+		$locale          = ''; // Utility::get_locale_from_currency();
 
 		return array(
 			'key'             => $key,
