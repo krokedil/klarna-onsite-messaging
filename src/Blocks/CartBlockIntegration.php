@@ -3,6 +3,7 @@ namespace Krokedil\KlarnaOnsiteMessaging\Blocks;
 
 use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
 use Krokedil\KlarnaOnsiteMessaging\Utility;
+use Krokedil\KlarnaOnsiteMessaging\Settings;
 
 /**
  * Integration for Klarna Onsite Messaging Cart Block.
@@ -52,6 +53,9 @@ class CartBlockIntegration implements IntegrationInterface {
 	 * @return array
 	 */
 	public function get_script_data() {
+		$saved_settings = get_option( 'klarna_onsite_messaging_settings', array() );
+		$settings       = new Settings( $saved_settings );
+
 		$key             = apply_filters( 'kosm_cart_block_key', '' );
 		$theme           = apply_filters( 'kosm_cart_block_theme', 'default' );
 		$purchase_amount = apply_filters( 'kosm_cart_block_purchase_amount', '' );
