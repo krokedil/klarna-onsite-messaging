@@ -1,6 +1,6 @@
 const { registerPlugin: RegisterPluginOSM } = wp.plugins;
 
-const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount: initialPurchaseAmount, cart }) => {
+const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount, cart }) => {
     const [showPlacement, setShowPlacement] = React.useState(true);
 
     React.useEffect(() => {
@@ -19,7 +19,7 @@ const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount: initialPurchaseA
                 'data-key': klarnaKey,
                 'data-locale': locale,
                 'data-theme': theme,
-                'data-purchase-amount': purchaseAmount.current
+                'data-purchase-amount': purchaseAmount
             }
         )
         : null;
