@@ -1,14 +1,14 @@
 const { registerPlugin } = wp.plugins;
 const { ExperimentalOrderMeta } = wc.blocksCheckout;
 
-const KlarnaPlacement = ({ key, locale, theme, purchaseAmount }) => (
+const KlarnaPlacement = ({ klarnaKey, locale, theme, purchaseAmount }) => (
     React.createElement(
         'klarna-placement',
         {
             className: 'klarna-onsite-messaging',
             'data-preloaded': 'true',
             'class': 'klarna-onsite-messaging',
-            'data-key': key,
+            'data-key': klarnaKey,
             'data-locale': locale,
             'data-theme': theme,
             'data-purchase-amount': purchaseAmount
@@ -27,9 +27,9 @@ const render = () => {
             ExperimentalOrderMeta,
             null,
             React.createElement(KlarnaPlacement, {
-                key: osmData.key || '',
+                klarnaKey: osmData.key || '',
                 locale: osmData.locale || '',
-                theme: osmData.theme || 'default',
+                theme: osmData.theme || '',
                 purchaseAmount: osmData.purchase_amount || ''
             })
         )
