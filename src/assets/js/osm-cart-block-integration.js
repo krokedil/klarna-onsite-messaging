@@ -16,8 +16,8 @@ const KlarnaPlacement = ({ key, locale, theme, purchaseAmount }) => (
 );
 
 const render = () => {
-    const osmData = window.osmCartBlockIntegrationData || {};
-    window.wc?.wcSettings?.getSetting(
+    const osmData =
+	window.wc?.wcSettings?.getSetting(
 		'osm-cart-block-integration_data',
 		{}
 	) || {};
