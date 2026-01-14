@@ -1,19 +1,29 @@
 const { registerPlugin: RegisterPluginOSM } = wp.plugins;
 
-const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount }) => (
-    React.createElement(
-        'klarna-placement',
-        {
-            className: 'klarna-onsite-messaging',
-            'data-preloaded': 'true',
-            'class': 'klarna-onsite-messaging',
-            'data-key': klarnaKey,
-            'data-locale': locale,
-            'data-theme': theme,
-            'data-purchase-amount': purchaseAmount
+const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount: initialPurchaseAmount, cart }) => {
+    const [showPlacement, setShowPlacement] = React.useState(true);
+
+    React.useEffect(() => {
+        if(window.klarna_onsite_messaging) {
+            window.klarna_onsite_messaging.update_total_price(cart.cartTotals.total_price);   
         }
-    )
-);
+    }, [cart.cartTotals.total_price]);
+
+    return showPlacement
+        ? React.createElement(
+            'klarna-placement',
+            {
+                className: 'klarna-onsite-messaging',
+                'data-preloaded': 'true',
+                'class': 'klarna-onsite-messaging',
+                'data-key': klarnaKey,
+                'data-locale': locale,
+                'data-theme': theme,
+                'data-purchase-amount': purchaseAmount.current
+            }
+        )
+        : null;
+};
 
 const renderOSM = () => {
     const osmData =

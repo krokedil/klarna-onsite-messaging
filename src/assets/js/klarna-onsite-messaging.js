@@ -181,3 +181,4 @@ const klarna_onsite_messaging = {
 }
 
 $('body').on('klarna_wc_sdk_loaded', klarna_onsite_messaging.init);
+window.klarna_onsite_messaging = klarna_onsite_messaging;
