@@ -1,5 +1,5 @@
 const { registerPlugin } = wp.plugins;
-const { ExperimentalOrderMeta } = wc.blocksCheckout; // blocksCheckout is used for both the Cart and Checkout blocks.
+const { ExperimentalOrderMeta } = wc.blocksCheckout;
 
 const KlarnaPlacement = ({ key, locale, theme, purchaseAmount }) => (
     React.createElement(
@@ -17,7 +17,10 @@ const KlarnaPlacement = ({ key, locale, theme, purchaseAmount }) => (
 
 const render = () => {
     const osmData = window.osmCartBlockIntegrationData || {};
-    console.log('OSM Cart Block Integration Data:', osmData);
+    window.wc?.wcSettings?.getSetting(
+		'osm-cart-block-integration_data',
+		{}
+	) || {};
     return (
         React.createElement(
             ExperimentalOrderMeta,
@@ -34,5 +37,5 @@ const render = () => {
 
 registerPlugin('osm-cart-block-integration', {
     render,
-    scope: 'woocommerce-checkout', // woocommerce-checkout applies to both the Cart and Checkout blocks.
+    scope: 'woocommerce-checkout',
 });
