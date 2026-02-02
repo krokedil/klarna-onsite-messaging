@@ -66,7 +66,7 @@ const klarna_onsite_messaging = {
 
             if ( typeof d !== "undefined" ) {
                 console.log( "%cDebug info: ", "color: #ff0000" )
-                for ( [ key, value ] of Object.entries( d ) ) {
+                for (const [key, value] of Object.entries(d)) {
                     console.log( `${ key }: ${ value }` )
                 }
 
@@ -83,7 +83,8 @@ const klarna_onsite_messaging = {
     init: async function (e) {
         klarna_onsite_messaging.params = configData;
         klarna_onsite_messaging.Klarna = klarna_interoperability.Klarna;
-
+        klarna_onsite_messaging.debug_info();
+        
         if (klarna_onsite_messaging.check_variable) {
             klarna_onsite_messaging.mount();
         }
@@ -181,3 +182,4 @@ const klarna_onsite_messaging = {
 }
 
 $('body').on('klarna_wc_sdk_loaded', klarna_onsite_messaging.init);
+window.klarna_onsite_messaging = klarna_onsite_messaging;
