@@ -6,12 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+------------------
+## [2.1.0] - 2026-02-02
 ### Added
 * Added support for On-Site messaging on the blocks cart page.
 ### Fix
 * Fixed an issue where the Onsite Messaging debug mode was not functioning as expected.
 
-------------------
 ## [2.0.0] - 2025-12-03
 ### Changed
 * Migrated to use the Klarna V2 WebSDK.
