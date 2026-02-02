@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 * Added support for On-Site messaging on the blocks cart page.
+### Fix
+* Fixed an issue where the Onsite Messaging debug mode was not functioning as expected.
 
 ------------------
 ## [2.0.0] - 2025-12-03
