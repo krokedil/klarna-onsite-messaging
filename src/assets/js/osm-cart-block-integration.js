@@ -23,9 +23,9 @@ const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount, cart }) => {
 }
 
 const renderOSM = () => {
-    const { ExperimentalOrderMeta } = wc?.blocksCheckout || {}
+    const { ExperimentalOrderMeta } = window.wc?.blocksCheckout || {}
     if (!ExperimentalOrderMeta) {
-        console.warn("[Klarna OSM] ExperimentalOrderMeta not found in wc.blocksCheckout — WooCommerce Blocks version may be incompatible.")
+        console.warn("[Klarna OSM] ExperimentalOrderMeta not found in window.wc.blocksCheckout — WooCommerce Blocks version may be incompatible.")
         return
     }
 
