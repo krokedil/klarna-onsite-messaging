@@ -45,5 +45,5 @@ const renderOSM = () => {
 
 RegisterPluginOSM("osm-cart-block-integration", {
     render: renderOSM,
-    scope: "woocommerce-checkout",
+    scope: "woocommerce-cart",
 })
