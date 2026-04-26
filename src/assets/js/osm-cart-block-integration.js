@@ -27,7 +27,7 @@ const renderOSM = () => {
     const { ExperimentalOrderMeta } = window.wc?.blocksCheckout || {}
     if (!ExperimentalOrderMeta) {
         console.warn("[Klarna OSM] ExperimentalOrderMeta not found in window.wc.blocksCheckout — WooCommerce Blocks version may be incompatible.")
-        return
+        return null
     }
 
     const osmData = window.wc?.wcSettings?.getSetting("osm-cart-block-integration_data", {}) || {}
