@@ -25,7 +25,7 @@ class CartBlockIntegration implements IntegrationInterface {
 	 */
 	public function initialize() {
 		$script_path = plugin_dir_url( __DIR__ ) . 'assets/js/osm-cart-block-integration.js';
-		wp_register_script( 'osm-cart-block-integration-script', $script_path, array( 'wp-blocks', 'wp-element', 'wp-editor' ), KOSM_VERSION, true );
+		wp_register_script( 'osm-cart-block-integration-script', $script_path, array( 'wp-plugins', 'wp-element' ), KOSM_VERSION, true );
 	}
 
 	/**
