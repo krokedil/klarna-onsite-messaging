@@ -3,7 +3,6 @@ namespace Krokedil\KlarnaOnsiteMessaging\Blocks;
 
 use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
 use Krokedil\KlarnaOnsiteMessaging\Utility;
-use Krokedil\KlarnaOnsiteMessaging\Settings;
 
 /**
  * Integration for Klarna Onsite Messaging Cart Block.
@@ -53,10 +52,11 @@ class CartBlockIntegration implements IntegrationInterface {
 	 * @return array
 	 */
 	public function get_script_data() {
+		$settings        = get_option( 'woocommerce_klarna_payments_settings', array() );
 		$key             = $settings['placement_data_key_cart'] ?? 'credit-promotion-badge';
 		$theme           = $settings['onsite_messaging_theme_cart'] ?? '';
 		$wc_cart_total   = WC()->cart ? WC()->cart->get_total( 'edit' ) : 0;
-		$purchase_amount = (int) ( round( floatval( str_replace( array( ',', '.' ), '', $wc_cart_total ) ) ) );
+		$purchase_amount = (int) ( round( \floatval( str_replace( array( ',', '.' ), '', $wc_cart_total ) ) ) );
 		$locale          = Utility::get_locale_from_currency();
 		return array(
 			'key'             => $key,
