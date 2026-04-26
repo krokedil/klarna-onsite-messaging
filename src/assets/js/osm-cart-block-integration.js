@@ -1,13 +1,14 @@
 const { registerPlugin: RegisterPluginOSM } = wp.plugins
 
-const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount, cart }) => {
+const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount }) => {
+    const { cartTotals } = window.wc.wcBlocksData.useStoreCart()
     const [showPlacement, setShowPlacement] = React.useState(true)
 
     React.useEffect(() => {
         if (window.klarna_onsite_messaging) {
-            window.klarna_onsite_messaging.update_total_price(cart.cartTotals.total_price)
+            window.klarna_onsite_messaging.update_total_price(cartTotals.total_price)
         }
-    }, [cart.cartTotals.total_price])
+    }, [cartTotals.total_price])
 
     return showPlacement
         ? React.createElement("klarna-placement", {
