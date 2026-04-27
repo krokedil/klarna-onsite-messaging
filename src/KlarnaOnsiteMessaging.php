@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KOSM_VERSION', '2.1.0' );
+define( 'KOSM_VERSION', '2.1.1' );
 
 /**
  * The orchestrator class.
