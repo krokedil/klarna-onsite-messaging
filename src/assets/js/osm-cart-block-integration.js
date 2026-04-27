@@ -13,7 +13,6 @@ const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount }) => {
     return React.createElement("klarna-placement", {
         className: "klarna-onsite-messaging",
         "data-preloaded": "true",
-        class: "klarna-onsite-messaging",
         "data-key": klarnaKey,
         "data-locale": locale,
         "data-theme": theme,
