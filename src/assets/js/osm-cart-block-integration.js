@@ -13,7 +13,6 @@ const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount, cart }) => {
         ? React.createElement("klarna-placement", {
               className: "klarna-onsite-messaging",
               "data-preloaded": "true",
-              class: "klarna-onsite-messaging",
               "data-key": klarnaKey,
               "data-locale": locale,
               "data-theme": theme,
@@ -23,6 +22,11 @@ const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount, cart }) => {
 }
 
 const renderOSM = () => {
+    const { ExperimentalOrderMeta } = window.wc?.blocksCheckout || {};
+    if (!ExperimentalOrderMeta) {
+        console.warn("[Klarna OSM] ExperimentalOrderMeta not found in window.wc.blocksCheckout")
+    }
+
     const osmData = window.wc?.wcSettings?.getSetting("osm-cart-block-integration_data", {}) || {}
     return React.createElement(
         ExperimentalOrderMeta,
