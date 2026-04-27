@@ -5,7 +5,7 @@ const ElementOSM = ({ klarnaKey, locale, theme, purchaseAmount }) => {
     const totalPrice = useSelect((select) => select("wc/store/cart").getCartTotals()?.total_price)
 
     React.useEffect(() => {
-        if (window.klarna_onsite_messaging && totalPrice) {
+        if (window.klarna_onsite_messaging && totalPrice !== undefined && totalPrice !== null) {
             window.klarna_onsite_messaging.update_total_price(totalPrice)
         }
     }, [totalPrice])
