@@ -1,6 +1,6 @@
 const $ = jQuery;
 let configData = {};
-const { klarna_interoperability } = await import("@klarna/interoperability_token");
+const { network_session } = await import("@klarna/klarna_network_session_token");
 const params = document.getElementById("wp-script-module-data-@klarna/onsite_messaging");
 
 if (params?.textContent) {
@@ -82,7 +82,7 @@ const klarna_onsite_messaging = {
 
     init: async function (e) {
         klarna_onsite_messaging.params = configData;
-        klarna_onsite_messaging.Klarna = klarna_interoperability.Klarna;
+        klarna_onsite_messaging.Klarna = network_session.Klarna;
         klarna_onsite_messaging.debug_info();
 
         if (klarna_onsite_messaging.check_variable) {
