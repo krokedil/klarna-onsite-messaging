@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KOSM_VERSION', '2.1.1' );
+define( 'KOSM_VERSION', '2.1.2' );
 
 /**
  * The orchestrator class.
@@ -173,6 +173,10 @@ class KlarnaOnsiteMessaging {
 		}
 		$region    = apply_filters( 'kosm_region_library', $region );
 		$client_id = apply_filters( 'kosm_data_client_id', $this->settings->get( 'data_client_id' ) );
+
+		if ( empty( $client_id ) ) {
+			return;
+		}
 
 		// Deregister the script that is registered by the KOSM plugin.
 		wp_deregister_script( 'klarna_onsite_messaging' );
