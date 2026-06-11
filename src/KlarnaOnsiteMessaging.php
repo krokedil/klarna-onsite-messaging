@@ -184,7 +184,7 @@ class KlarnaOnsiteMessaging {
 		wp_deregister_script( 'onsite_messaging_script' );
 
 		$script_path = plugin_dir_url( __FILE__ ) . 'assets/js/klarna-onsite-messaging.js';
-		wp_register_script_module( '@klarna/onsite_messaging', $script_path, array( '@klarna/klarna_network_session_token' ), KOSM_VERSION );
+		wp_register_script_module( '@klarna/onsite_messaging', $script_path, array( '@klarna/network_session_token' ), KOSM_VERSION );
 
 		$localize = array(
 			'client_id'          => $client_id,

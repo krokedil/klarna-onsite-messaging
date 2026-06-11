@@ -1,6 +1,6 @@
 const $ = jQuery;
 let configData = {};
-const { network_session } = await import("@klarna/klarna_network_session_token");
+const { network_session } = await import("@klarna/network_session_token");
 const params = document.getElementById("wp-script-module-data-@klarna/onsite_messaging");
 
 if (params?.textContent) {
